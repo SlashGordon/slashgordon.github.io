@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on my private blog</title>
+    <link>/tags/</link>
+    <description>Recent content in Tags on my private blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>2019</copyright>
+    <lastBuildDate>Thu, 18 Jun 2020 01:53:34 +0800</lastBuildDate>
+    
+	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Archer c6</title>
+      <link>/tags/archer-c6/</link>
+      <pubDate>Thu, 18 Jun 2020 01:53:34 +0800</pubDate>
+      
+      <guid>/tags/archer-c6/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>FritzBox</title>
+      <link>/tags/fritzbox/</link>
+      <pubDate>Thu, 18 Jun 2020 01:53:34 +0800</pubDate>
+      
+      <guid>/tags/fritzbox/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>iptables</title>
+      <link>/tags/iptables/</link>
+      <pubDate>Thu, 18 Jun 2020 01:53:34 +0800</pubDate>
+      
+      <guid>/tags/iptables/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>openwrt</title>
+      <link>/tags/openwrt/</link>
+      <pubDate>Thu, 18 Jun 2020 01:53:34 +0800</pubDate>
+      
+      <guid>/tags/openwrt/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>aboutme</title>
+      <link>/tags/aboutme/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/aboutme/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>buchhaltung</title>
+      <link>/tags/buchhaltung/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/buchhaltung/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>portoli</title>
+      <link>/tags/portoli/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/portoli/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>projects</title>
+      <link>/tags/projects/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/projects/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>slash</title>
+      <link>/tags/slash/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/slash/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

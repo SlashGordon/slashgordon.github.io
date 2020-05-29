@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>iptables on my private blog</title>
+    <link>/tags/iptables/</link>
+    <description>Recent content in iptables on my private blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>2019</copyright>
+    <lastBuildDate>Thu, 18 Jun 2020 01:53:34 +0800</lastBuildDate>
+    
+	<atom:link href="/tags/iptables/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Isolate FritzBox network from OpenWrt guest WiFi</title>
+      <link>/post/fritzbox_behind_openwrt_guest/</link>
+      <pubDate>Thu, 18 Jun 2020 01:53:34 +0800</pubDate>
+      
+      <guid>/post/fritzbox_behind_openwrt_guest/</guid>
+      <description>&lt;p&gt;Some months ago I configured a OpenWrt WiFi router behind a Fritz!Box.
+A friend of mine told me that he is able to connect to other network clients outside of the OpenWrt guest WiFi.&lt;/p&gt;
+&lt;p&gt;The behavior is quite clear after a minute of reflection. The Fritz!Box is connected to the WAN port of the OpenWrt router ;)&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
