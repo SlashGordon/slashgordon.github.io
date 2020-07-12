@@ -6,10 +6,37 @@
     <description>Recent content in Tags on my private blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>2019</copyright>
-    <lastBuildDate>Thu, 18 Jun 2020 01:53:34 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 12 Jul 2020 01:12:34 +0800</lastBuildDate>
     
 	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>decrypt</title>
+      <link>/tags/decrypt/</link>
+      <pubDate>Sun, 12 Jul 2020 01:12:34 +0800</pubDate>
+      
+      <guid>/tags/decrypt/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>github</title>
+      <link>/tags/github/</link>
+      <pubDate>Sun, 12 Jul 2020 01:12:34 +0800</pubDate>
+      
+      <guid>/tags/github/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>travis</title>
+      <link>/tags/travis/</link>
+      <pubDate>Sun, 12 Jul 2020 01:12:34 +0800</pubDate>
+      
+      <guid>/tags/travis/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Archer c6</title>
