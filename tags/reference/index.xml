@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>reference on my private blog</title>
+    <link>/tags/reference/</link>
+    <description>Recent content in reference on my private blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>2019</copyright>
+    <lastBuildDate>Mon, 16 Nov 2020 04:12:34 +0800</lastBuildDate>
+    
+	<atom:link href="/tags/reference/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Pass by value or pointer?</title>
+      <link>/post/go_pass_by_value_or_pointer/</link>
+      <pubDate>Mon, 16 Nov 2020 04:12:34 +0800</pubDate>
+      
+      <guid>/post/go_pass_by_value_or_pointer/</guid>
+      <description>&lt;p&gt;In this post I will describe when you should passed a type by value or pointer in Go.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
