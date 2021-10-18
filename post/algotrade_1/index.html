@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Algo trading part 1 - how to receive price data - my private blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="SlashGordon" /><meta name="description" content="One of the important challenges in algo trading is to scan 1000 and more stocks and do some magic with the price data. But how can we get the price data?
+" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.72.0 with theme even" />
+
+
+<link rel="canonical" href="/post/algotrade_1/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.78f8f17bab244b9ee62ad16480c9584d5fc2db06ae20681d1ca225cefd80767c.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Algo trading part 1 - how to receive price data" />
+<meta property="og:description" content="One of the important challenges in algo trading is to scan 1000 and more stocks and do some magic with the price data.
+But how can we get the price data?" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/algotrade_1/" />
+<meta property="article:published_time" content="2021-06-18T01:53:34+08:00" />
+<meta property="article:modified_time" content="2021-06-18T01:53:34+08:00" />
+<meta itemprop="name" content="Algo trading part 1 - how to receive price data">
+<meta itemprop="description" content="One of the important challenges in algo trading is to scan 1000 and more stocks and do some magic with the price data.
+But how can we get the price data?">
+<meta itemprop="datePublished" content="2021-06-18T01:53:34&#43;08:00" />
+<meta itemprop="dateModified" content="2021-06-18T01:53:34&#43;08:00" />
+<meta itemprop="wordCount" content="229">
+
+
+
+<meta itemprop="keywords" content="algotrading,trading,python,stock,data,price," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Algo trading part 1 - how to receive price data"/>
+<meta name="twitter:description" content="One of the important challenges in algo trading is to scan 1000 and more stocks and do some magic with the price data.
+But how can we get the price data?"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">SlashGordon</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/about">
+        <li class="mobile-menu-item">About me</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/projects">
+        <li class="mobile-menu-item">Projects</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">SlashGordon</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/about">About me</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/projects">Projects</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Algo trading part 1 - how to receive price data</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2021-06-18 </span>
+        <div class="post-category">
+            <a href="/categories/tutorial/"> tutorial </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#how-can-we-get-the-price-data">How can we get the price data?</a></li>
+    <li><a href="#how-can-we-get-the-stock-symbols">How can we get the stock symbols?</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>One of the important challenges in algo trading is to scan 1000 and more stocks and do some magic with the price data.
+But how can we get the price data?</p>
+<h2 id="how-can-we-get-the-price-data">How can we get the price data?</h2>
+<p>There a tons of projects on github to get price data and my favorite is <a href="https://github.com/ranaroussi/yfinance">yfinance</a>.</p>
+<p>The following examples shows us how to receive microsoft stock prices:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> yfinance <span style="color:#f92672">as</span> yf
+msft <span style="color:#f92672">=</span> yf<span style="color:#f92672">.</span>Ticker(<span style="color:#e6db74">&#34;MSFT&#34;</span>)
+<span style="color:#75715e"># get stock info</span>
+msft<span style="color:#f92672">.</span>info
+<span style="color:#75715e"># get historical market data</span>
+hist <span style="color:#f92672">=</span> msft<span style="color:#f92672">.</span>history(period<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;max&#34;</span>)
+</code></pre></div><p>The lib needs a thicker symbol to download historical market data so we need a database with all important stock symbols.</p>
+<h2 id="how-can-we-get-the-stock-symbols">How can we get the stock symbols?</h2>
+<p>I wrote a lib by myself for this problem. The name is <a href="https://github.com/portfolioplus/pytickersymbols">pytickersymbols</a> and is completely open for everyone.</p>
+<p>The syntax is quite simple:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> yfinance <span style="color:#f92672">as</span> yf
+<span style="color:#f92672">from</span> pytickersymbols <span style="color:#f92672">import</span> PyTickerSymbols
+
+stock_data <span style="color:#f92672">=</span> PyTickerSymbols()
+
+sp100_yahoo <span style="color:#f92672">=</span> stock_data<span style="color:#f92672">.</span>get_sp_100_nyc_yahoo_tickers()
+sp500_google <span style="color:#f92672">=</span> stock_data<span style="color:#f92672">.</span>get_sp_500_nyc_yahoo_tickers()
+dow_yahoo <span style="color:#f92672">=</span> stock_data<span style="color:#f92672">.</span>get_dow_jones_nyc_yahoo_tickers()
+
+us_stocks <span style="color:#f92672">=</span> sp100_yahoo <span style="color:#f92672">+</span> sp500_google <span style="color:#f92672">+</span> dow_yahoo
+
+<span style="color:#66d9ef">for</span> us_stock <span style="color:#f92672">in</span> us_stocks:
+   stock_data <span style="color:#f92672">=</span> yf<span style="color:#f92672">.</span>Ticker(us_stock)
+   data <span style="color:#f92672">=</span> stock_data<span style="color:#f92672">.</span>history(period<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;max&#34;</span>)
+   <span style="color:#75715e"># save data for analysis purposes</span>
+   data<span style="color:#f92672">.</span>to_csv(f<span style="color:#e6db74">&#39;{us_stock}.csv&#39;</span>, sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#39;</span>, encoding<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;utf-8&#39;</span>)
+   <span style="color:#75715e"># do magic stuff wit price data</span>
+   data[<span style="color:#e6db74">&#39;SMA(5)&#39;</span>] <span style="color:#f92672">=</span> data<span style="color:#f92672">.</span>open<span style="color:#f92672">.</span>rolling(<span style="color:#ae81ff">5</span>)<span style="color:#f92672">.</span>mean()
+   data[<span style="color:#e6db74">&#39;SMA(15)&#39;</span>] <span style="color:#f92672">=</span> data<span style="color:#f92672">.</span>open<span style="color:#f92672">.</span>rolling(<span style="color:#ae81ff">15</span>)<span style="color:#f92672">.</span>mean()
+   df[<span style="color:#e6db74">&#39;Buy&#39;</span>] <span style="color:#f92672">=</span> df[<span style="color:#e6db74">&#39;SMA(5)&#39;</span>]<span style="color:#f92672">.</span>ge(df[<span style="color:#e6db74">&#39;SMA(15)&#39;</span>])
+   data<span style="color:#f92672">.</span>to_csv(f<span style="color:#e6db74">&#39;{us_stock}.csv&#39;</span>, sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#39;</span>, encoding<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;utf-8&#39;</span>)
+</code></pre></div><p>With the script above we are able to download price data from 640 different stocks and can generate buy signals with the simple SMA algo. Wow :D</p>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">SlashGordon</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2021-06-18
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/algotrading/">algotrading</a>
+          <a href="/tags/trading/">trading</a>
+          <a href="/tags/python/">python</a>
+          <a href="/tags/stock/">stock</a>
+          <a href="/tags/data/">data</a>
+          <a href="/tags/price/">price</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/go_pass_by_value_or_pointer/">
+            <span class="next-text nav-default">Pass by value or pointer?</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:slash.gordon.dev@gmail.com%20" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/SlashGordon" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.instagram.com/mr.carlo.labrador/" class="iconfont icon-instagram" title="instagram"></a>
+  <a href="/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2019 - 
+    2021
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">2019</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  <script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+
+
+
+<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
+<script src="https://tarptaeya.github.io/repo-card/repo-card.js"></script>
+
+
+
+
+
+
+
+</body>
+</html>
