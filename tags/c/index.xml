@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>c on my private blog</title>
+    <link>/tags/c/</link>
+    <description>Recent content in c on my private blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>2019</copyright>
+    <lastBuildDate>Sun, 09 Jan 2022 01:53:34 +0800</lastBuildDate>
+    
+	<atom:link href="/tags/c/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Use golang library with python</title>
+      <link>/post/python_wrapper_for_golang/</link>
+      <pubDate>Sun, 09 Jan 2022 01:53:34 +0800</pubDate>
+      
+      <guid>/post/python_wrapper_for_golang/</guid>
+      <description>&lt;p&gt;A few weeks ago I wrote URL tokenizer in Python and the code was very similar to a Go project.
+I invested some hours to find out a solution to use the Go code in python and here are my results.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Use golang library with python - my private blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="SlashGordon" /><meta name="description" content="A few weeks ago I wrote URL tokenizer in Python and the code was very similar to a Go project. I invested some hours to find out a solution to use the Go code in python and here are my results.
+" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.72.0 with theme even" />
+
+
+<link rel="canonical" href="/post/python_wrapper_for_golang/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.2e81bbed97b8b282c1aeb57488cc71c8d8c8ec559f3931531bd396bf31e0d4dd.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Use golang library with python" />
+<meta property="og:description" content="A few weeks ago I wrote URL tokenizer in Python and the code was very similar to a Go project.
+I invested some hours to find out a solution to use the Go code in python and here are my results." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/python_wrapper_for_golang/" />
+<meta property="article:published_time" content="2022-01-09T01:53:34+08:00" />
+<meta property="article:modified_time" content="2022-01-06T01:53:34+08:00" />
+<meta itemprop="name" content="Use golang library with python">
+<meta itemprop="description" content="A few weeks ago I wrote URL tokenizer in Python and the code was very similar to a Go project.
+I invested some hours to find out a solution to use the Go code in python and here are my results.">
+<meta itemprop="datePublished" content="2022-01-09T01:53:34&#43;08:00" />
+<meta itemprop="dateModified" content="2022-01-06T01:53:34&#43;08:00" />
+<meta itemprop="wordCount" content="520">
+
+
+
+<meta itemprop="keywords" content="golang,wrapper,python,c," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Use golang library with python"/>
+<meta name="twitter:description" content="A few weeks ago I wrote URL tokenizer in Python and the code was very similar to a Go project.
+I invested some hours to find out a solution to use the Go code in python and here are my results."/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">SlashGordon</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/about">
+        <li class="mobile-menu-item">About me</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/projects">
+        <li class="mobile-menu-item">Projects</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">SlashGordon</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/about">About me</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/projects">Projects</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Use golang library with python</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2022-01-09 </span>
+        <div class="post-category">
+            <a href="/categories/tutorial/"> tutorial </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#how-to-reuse-go-code-in-python">How to reuse Go code in python</a></li>
+    <li><a href="#how-to-export-the-c">How to export the C</a></li>
+    <li><a href="#how-to-write-exportable-go-code">How to write exportable Go code</a></li>
+    <li><a href="#conclusions">Conclusions</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>A few weeks ago I wrote URL tokenizer in Python and the code was very similar to a Go project.
+I invested some hours to find out a solution to use the Go code in python and here are my results.</p>
+<h2 id="how-to-reuse-go-code-in-python">How to reuse Go code in python</h2>
+<ul>
+<li>Go and Python programs can communicate between each other using gRPC</li>
+<li>Translate Go code into Python code with <a href="https://github.com/go-python/gotopy">GoToPy</a></li>
+<li>Export Go as C-Library and write a Python wrapper</li>
+</ul>
+<p>I decided to try out the C-Library export and here are my results.</p>
+<h2 id="how-to-export-the-c">How to export the C</h2>
+<p><code>go build -o awesome.so -buildmode=c-shared awesome.go</code></p>
+<p>The resulting binary format depends on the operating system. For other platforms you can use the cross compiler as follows:</p>
+<p><code>GOOS=linux GOARCH=arm64 go build -o awesome.so -buildmode=c-shared awesome.go</code></p>
+<p>All available GOOS/GOARCH&rsquo;s combinations in Go 1.7 you can list with:</p>
+<p><code>go tool dist list</code></p>
+<h2 id="how-to-write-exportable-go-code">How to write exportable Go code</h2>
+<p>We need to use <code>import &quot;C&quot;</code> to activate cgo.</p>
+<p>The preamble may contain any C code, including function and variable declarations and definitions and <code>#include &lt;stdlib.h&gt;</code> is the must have.</p>
+<p>Each function that we want to export, we must tag with <code>export function_name</code>.</p>
+<p>Python and Go types an not directly compatible and therefore we have to use ctypes. Complex structs are not directly supported but we can use a simple JSON string for Unmarshal. In the following example we use a list of URLs.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Go" data-lang="Go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#75715e">/*
+</span><span style="color:#75715e">#include &lt;stdlib.h&gt;
+</span><span style="color:#75715e">*/</span>
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;C&#34;</span>
+
+<span style="color:#f92672">import</span> (
+	<span style="color:#e6db74">&#34;encoding/binary&#34;</span>
+	<span style="color:#e6db74">&#34;encoding/json&#34;</span>
+	<span style="color:#e6db74">&#34;unsafe&#34;</span>
+
+	<span style="color:#a6e22e">tok</span> <span style="color:#e6db74">&#34;github.com/emetriq/gourltokenizer/tokenizer&#34;</span>
+)
+
+<span style="color:#75715e">//export Tokenize
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Tokenize</span>(<span style="color:#a6e22e">urlsByte</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">char</span>, <span style="color:#a6e22e">size</span> <span style="color:#a6e22e">C</span>.<span style="color:#66d9ef">int</span>) <span style="color:#a6e22e">unsafe</span>.<span style="color:#a6e22e">Pointer</span> {
+	<span style="color:#a6e22e">d</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">GoBytes</span>(<span style="color:#a6e22e">unsafe</span>.<span style="color:#a6e22e">Pointer</span>(<span style="color:#a6e22e">urlsByte</span>), <span style="color:#a6e22e">size</span>)
+	<span style="color:#a6e22e">urls</span> <span style="color:#f92672">:=</span> make([]<span style="color:#66d9ef">string</span>, <span style="color:#ae81ff">0</span>, <span style="color:#a6e22e">size</span>)
+	<span style="color:#a6e22e">_</span> = <span style="color:#a6e22e">json</span>.<span style="color:#a6e22e">Unmarshal</span>([]byte(<span style="color:#a6e22e">d</span>), <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">urls</span>)
+	<span style="color:#a6e22e">result</span> <span style="color:#f92672">:=</span> make([][]<span style="color:#66d9ef">string</span>, <span style="color:#ae81ff">0</span>, len(<span style="color:#a6e22e">urls</span>))
+	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">url</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">urls</span> {
+		<span style="color:#a6e22e">result</span> = append(<span style="color:#a6e22e">result</span>, <span style="color:#a6e22e">tok</span>.<span style="color:#a6e22e">TokenizeV2</span>(<span style="color:#a6e22e">url</span>, <span style="color:#a6e22e">tok</span>.<span style="color:#a6e22e">IsEnglishStopWord</span>))
+	}
+	<span style="color:#a6e22e">resultByte</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">json</span>.<span style="color:#a6e22e">Marshal</span>(<span style="color:#a6e22e">result</span>)
+	<span style="color:#a6e22e">length</span> <span style="color:#f92672">:=</span> make([]<span style="color:#66d9ef">byte</span>, <span style="color:#ae81ff">8</span>)
+	<span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">LittleEndian</span>.<span style="color:#a6e22e">PutUint64</span>(<span style="color:#a6e22e">length</span>, uint64(len(<span style="color:#a6e22e">resultByte</span>)))
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">CBytes</span>(append(<span style="color:#a6e22e">length</span>, <span style="color:#a6e22e">resultByte</span><span style="color:#f92672">...</span>))
+}
+
+<span style="color:#75715e">//export Free
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Free</span>(<span style="color:#a6e22e">addr</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">char</span>) {
+	<span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">free</span>(<span style="color:#a6e22e">unsafe</span>.<span style="color:#a6e22e">Pointer</span>(<span style="color:#a6e22e">addr</span>))
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {}
+</code></pre></div><p>In the python code we have to load the lib and we see the first disadvantage. For example, distribution of prebuilt wheel packages is a major challenge when you think about all the possible GOOS/GOARCH&rsquo;s combinations and personally, I don&rsquo;t like the ugly C types.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> ctypes <span style="color:#f92672">as</span> ct
+<span style="color:#f92672">from</span> typing <span style="color:#f92672">import</span> List
+<span style="color:#f92672">import</span> json
+
+_lib <span style="color:#f92672">=</span> ct<span style="color:#f92672">.</span>cdll<span style="color:#f92672">.</span>LoadLibrary(<span style="color:#e6db74">&#34;./tokenizer.so&#34;</span>)
+
+_lib<span style="color:#f92672">.</span>TokenizeEng<span style="color:#f92672">.</span>argtypes <span style="color:#f92672">=</span> [ct<span style="color:#f92672">.</span>c_char_p, ct<span style="color:#f92672">.</span>c_int]
+_lib<span style="color:#f92672">.</span>TokenizeEng<span style="color:#f92672">.</span>restype <span style="color:#f92672">=</span> ct<span style="color:#f92672">.</span>POINTER(ct<span style="color:#f92672">.</span>c_ubyte<span style="color:#f92672">*</span><span style="color:#ae81ff">8</span>)
+_lib<span style="color:#f92672">.</span>Free<span style="color:#f92672">.</span>argtypes <span style="color:#f92672">=</span> ct<span style="color:#f92672">.</span>c_void_p,
+_lib<span style="color:#f92672">.</span>Free<span style="color:#f92672">.</span>restype <span style="color:#f92672">=</span> None
+
+tokenize <span style="color:#f92672">=</span> _lib<span style="color:#f92672">.</span>Tokenize
+free <span style="color:#f92672">=</span> _lib<span style="color:#f92672">.</span>Free
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">tokenize</span>(urls: List[str]):
+    <span style="color:#66d9ef">try</span>:
+        data <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>dumps(urls)<span style="color:#f92672">.</span>encode(<span style="color:#e6db74">&#39;utf-8&#39;</span>)
+        ptr <span style="color:#f92672">=</span> tokenize(data, len(data))
+        length <span style="color:#f92672">=</span> int<span style="color:#f92672">.</span>from_bytes(ptr<span style="color:#f92672">.</span>contents, byteorder<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;little&#39;</span>)
+        data <span style="color:#f92672">=</span> bytes(ct<span style="color:#f92672">.</span>cast(ptr,
+                ct<span style="color:#f92672">.</span>POINTER(ct<span style="color:#f92672">.</span>c_ubyte<span style="color:#f92672">*</span>(<span style="color:#ae81ff">8</span> <span style="color:#f92672">+</span> length))
+                )<span style="color:#f92672">.</span>contents[<span style="color:#ae81ff">8</span>:])
+        <span style="color:#66d9ef">return</span> json<span style="color:#f92672">.</span>loads(data<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#39;utf-8&#39;</span>))
+    <span style="color:#66d9ef">finally</span>:
+        free(ptr)
+
+<span style="color:#66d9ef">print</span>(tokenize([<span style="color:#e6db74">&#34;https://www.google.com/hallo/essen&#34;</span>,
+<span style="color:#e6db74">&#34;https://www.facebook.com/autos/geld/news&#34;</span>]))
+</code></pre></div><h2 id="conclusions">Conclusions</h2>
+<p>Python wrappers are cool, but pre-built packages for all platforms require a lot of work in your CI/CD pipeline.</p>
+<p>I think if you would like to reach max performance you always have to use native code in combination with a unique unit test spec for all programming languages.</p>
+<p>If the performance is not so important, you can give <a href="https://github.com/aws/jsii">jsii</a> a try. The base code is TypeScript and jsii is able to convert the code to Python, Java, C# and Go. But under the hood there is always a jsii runtime environment, so we can&rsquo;t talk about 100% native code here.</p>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">SlashGordon</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2022-01-06
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/golang/">golang</a>
+          <a href="/tags/wrapper/">wrapper</a>
+          <a href="/tags/python/">python</a>
+          <a href="/tags/c/">c</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/algotrade_1/">
+            <span class="next-text nav-default">Algo trading part 1 - how to receive price data</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:slash.gordon.dev@gmail.com%20" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/SlashGordon" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.instagram.com/mr.carlo.labrador/" class="iconfont icon-instagram" title="instagram"></a>
+  <a href="/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2019 - 
+    2022
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">2019</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  <script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+<script src="https://tarptaeya.github.io/repo-card/repo-card.js"></script>
+
+
+
+
+
+
+
+</body>
+</html>

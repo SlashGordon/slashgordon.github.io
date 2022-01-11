@@ -6,10 +6,20 @@
     <description>Recent content in tutorial on my private blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>2019</copyright>
-    <lastBuildDate>Fri, 18 Jun 2021 01:53:34 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 09 Jan 2022 01:53:34 +0800</lastBuildDate>
     
 	<atom:link href="/categories/tutorial/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Use golang library with python</title>
+      <link>/post/python_wrapper_for_golang/</link>
+      <pubDate>Sun, 09 Jan 2022 01:53:34 +0800</pubDate>
+      
+      <guid>/post/python_wrapper_for_golang/</guid>
+      <description>&lt;p&gt;A few weeks ago I wrote URL tokenizer in Python and the code was very similar to a Go project.
+I invested some hours to find out a solution to use the Go code in python and here are my results.&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Algo trading part 1 - how to receive price data</title>
