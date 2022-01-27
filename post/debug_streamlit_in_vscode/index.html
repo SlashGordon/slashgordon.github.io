@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>my private blog</title>
+  <title>Debug streamlit app in vscode - my private blog</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -16,7 +16,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="SlashGordon" /><meta name="description" content="Hugo theme even example site." /><meta name="keywords" content="Hugo, theme, even" />
+<meta name="author" content="SlashGordon" /><meta name="description" content="Today I want to share my vscode launch configuration for streamlit live debugging.
+" /><meta name="keywords" content="Hugo, theme, even" />
 
 
 
@@ -26,9 +27,7 @@
 <meta name="generator" content="Hugo 0.72.0 with theme even" />
 
 
-<link rel="canonical" href="/" />
-  <link href="/index.xml" rel="alternate" type="application/rss+xml" title="my private blog" />
-  <link href="/index.xml" rel="feed" type="application/rss+xml" title="my private blog" />
+<link rel="canonical" href="/post/debug_streamlit_in_vscode/" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -41,15 +40,23 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
-<meta property="og:title" content="my private blog" />
-<meta property="og:description" content="Hugo theme even example site." />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="/" />
-<meta property="og:updated_time" content="2022-01-27T01:53:34+08:00" />
-<meta itemprop="name" content="my private blog">
-<meta itemprop="description" content="Hugo theme even example site."><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="my private blog"/>
-<meta name="twitter:description" content="Hugo theme even example site."/>
+<meta property="og:title" content="Debug streamlit app in vscode" />
+<meta property="og:description" content="Today I want to share my vscode launch configuration for streamlit live debugging." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/debug_streamlit_in_vscode/" />
+<meta property="article:published_time" content="2022-01-27T01:53:34+08:00" />
+<meta property="article:modified_time" content="2022-01-27T01:53:34+08:00" />
+<meta itemprop="name" content="Debug streamlit app in vscode">
+<meta itemprop="description" content="Today I want to share my vscode launch configuration for streamlit live debugging.">
+<meta itemprop="datePublished" content="2022-01-27T01:53:34&#43;08:00" />
+<meta itemprop="dateModified" content="2022-01-27T01:53:34&#43;08:00" />
+<meta itemprop="wordCount" content="94">
+
+
+
+<meta itemprop="keywords" content="python,vscode,streamlit,debug," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Debug streamlit app in vscode"/>
+<meta name="twitter:description" content="Today I want to share my vscode launch configuration for streamlit live debugging."/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -123,126 +130,96 @@
     <main id="main" class="main">
       <div class="content-wrapper">
         <div id="content" class="content">
-          <section id="posts" class="posts">
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/debug_streamlit_in_vscode/">Debug streamlit app in vscode</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2022-01-27 </span>
-      <div class="post-category">
-          <a href="/categories/configuration/"> configuration </a>
-          </div>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p>Today I want to share my vscode launch configuration for <a href="https://github.com/streamlit">streamlit</a> live debugging.</p>
-    </div>
-    <div class="read-more">
-      <a href="/post/debug_streamlit_in_vscode/" class="read-more-link">Read more...</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/python_wrapper_for_golang/">Use golang library with python</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2022-01-09 </span>
-      <div class="post-category">
-          <a href="/categories/tutorial/"> tutorial </a>
-          </div>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p>A few weeks ago I wrote URL tokenizer in Python and the code was very similar to a Go project.
-I invested some hours to find out a solution to use the Go code in python and here are my results.</p>
-    </div>
-    <div class="read-more">
-      <a href="/post/python_wrapper_for_golang/" class="read-more-link">Read more...</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/algotrade_1/">Algo trading part 1 - how to receive price data</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2021-06-18 </span>
-      <div class="post-category">
-          <a href="/categories/tutorial/"> tutorial </a>
-          </div>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p>One of the important challenges in algo trading is to scan 1000 and more stocks and do some magic with the price data.
-But how can we get the price data?</p>
-    </div>
-    <div class="read-more">
-      <a href="/post/algotrade_1/" class="read-more-link">Read more...</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/go_pass_by_value_or_pointer/">Pass by value or pointer?</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2020-11-16 </span>
-      <div class="post-category">
-          <a href="/categories/go/"> go </a>
-          </div>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p>In this post I will describe when you should passed a type by value or pointer in Go.</p>
-    </div>
-    <div class="read-more">
-      <a href="/post/go_pass_by_value_or_pointer/" class="read-more-link">Read more...</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/travis_decrypt/">Decrypt travis file in github repository</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2020-07-12 </span>
-      <div class="post-category">
-          <a href="/categories/tutorial/"> tutorial </a>
-          </div>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      Travis is a very popular CI service and offers a feature for file encryption to keep your secrets. At the moment it&rsquo;s not straight forward to decrypt files and therefore I&rsquo;m going to provide a workaround in this post.
-Workaround send a file with ftp/sftp In this method we’ll update the .travis.yml in a new branch. There is a file with the name setup.tar.gz.enc that we want to decrypt and send via ftp.
-    </div>
-    <div class="read-more">
-      <a href="/post/travis_decrypt/" class="read-more-link">Read more...</a>
-    </div>
-  </div>
-</article>
-
-    </section>
-  
-  <nav class="pagination">
+          <article class="post">
     
-    <a class="next" href="/page/2/">
-        <span class="next-text">Next</span>
-        <i class="iconfont icon-right"></i>
-      </a>
-  </nav>
+    <header class="post-header">
+      <h1 class="post-title">Debug streamlit app in vscode</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2022-01-27 </span>
+        <div class="post-category">
+            <a href="/categories/configuration/"> configuration </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#how-to-debug-streamlit-app-in-vscode">How to debug streamlit app in vscode</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>Today I want to share my vscode launch configuration for <a href="https://github.com/streamlit">streamlit</a> live debugging.</p>
+<h2 id="how-to-debug-streamlit-app-in-vscode">How to debug streamlit app in vscode</h2>
+<p>Usually I use the <code>&quot;program&quot;: &quot;${file}&quot;</code> pattern to debug my python scripts. But this is not very useful for <a href="https://github.com/streamlit">streamlit</a>  applications. I found a setup to debug a Python module instead, and I use it for my <a href="https://github.com/streamlit">streamlit</a> case.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+   <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;0.2.0&#34;</span>,
+   <span style="color:#f92672">&#34;configurations&#34;</span>: [{
+        <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Python: Streamlit&#34;</span>,
+        <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;python&#34;</span>,
+        <span style="color:#f92672">&#34;request&#34;</span>: <span style="color:#e6db74">&#34;launch&#34;</span>,
+        <span style="color:#f92672">&#34;module&#34;</span>: <span style="color:#e6db74">&#34;streamlit&#34;</span>,
+        <span style="color:#f92672">&#34;env&#34;</span>: {
+            <span style="color:#f92672">&#34;STREAMLIT_APP&#34;</span>: <span style="color:#e6db74">&#34;app.py&#34;</span>,
+            <span style="color:#f92672">&#34;STREAMLIT_ENV&#34;</span>: <span style="color:#e6db74">&#34;development&#34;</span>,
+            <span style="color:#f92672">&#34;AWS_PROFILE&#34;</span>: <span style="color:#e6db74">&#34;mega_root&#34;</span>,
+            <span style="color:#f92672">&#34;PYTHONPATH&#34;</span>: <span style="color:#e6db74">&#34;${workspaceRoot}/src&#34;</span>,
+        },
+        <span style="color:#f92672">&#34;args&#34;</span>: [
+            <span style="color:#e6db74">&#34;run&#34;</span>,
+            <span style="color:#e6db74">&#34;/Users/projects/streamlit/app.py&#34;</span>
+        ],
+        <span style="color:#f92672">&#34;jinja&#34;</span>: <span style="color:#66d9ef">true</span>
+    }
+   ]
+}
+</code></pre></div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">SlashGordon</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2022-01-27
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/python/">python</a>
+          <a href="/tags/vscode/">vscode</a>
+          <a href="/tags/streamlit/">streamlit</a>
+          <a href="/tags/debug/">debug</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/python_wrapper_for_golang/">
+            <span class="next-text nav-default">Use golang library with python</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
         </div>
         
+
+  
+
+  
 
       </div>
     </main>
