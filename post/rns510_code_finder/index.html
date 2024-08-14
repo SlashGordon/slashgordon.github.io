@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>How I Resurrected My RNS 510 to Seal the Deal (Code Finder RNS510) - my private blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="SlashGordon" /><meta name="description" content="Learn how I used a Python script to recover the lost PIN code for my RNS 510, saving a deal and bringing old tech back to life." /><meta name="keywords" content="RNS 510, Volkswagen, anti-theft code, Python script, code finder, car electronics, VW Tiguan, RNS 510 code recovery" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.72.0 with theme even" />
+
+
+<link rel="canonical" href="/post/rns510_code_finder/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.2e81bbed97b8b282c1aeb57488cc71c8d8c8ec559f3931531bd396bf31e0d4dd.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="How I Resurrected My RNS 510 to Seal the Deal (Code Finder RNS510)" />
+<meta property="og:description" content="Learn how I used a Python script to recover the lost PIN code for my RNS 510, saving a deal and bringing old tech back to life." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/rns510_code_finder/" />
+<meta property="article:published_time" content="2024-08-14T01:53:34+08:00" />
+<meta property="article:modified_time" content="2024-08-14T01:53:34+08:00" />
+<meta itemprop="name" content="How I Resurrected My RNS 510 to Seal the Deal (Code Finder RNS510)">
+<meta itemprop="description" content="Learn how I used a Python script to recover the lost PIN code for my RNS 510, saving a deal and bringing old tech back to life.">
+<meta itemprop="datePublished" content="2024-08-14T01:53:34&#43;08:00" />
+<meta itemprop="dateModified" content="2024-08-14T01:53:34&#43;08:00" />
+<meta itemprop="wordCount" content="991">
+
+
+
+<meta itemprop="keywords" content="python,vw,rns510,code,Volkswagen,anti-theft,car electronics," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="How I Resurrected My RNS 510 to Seal the Deal (Code Finder RNS510)"/>
+<meta name="twitter:description" content="Learn how I used a Python script to recover the lost PIN code for my RNS 510, saving a deal and bringing old tech back to life."/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">SlashGordon</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/about">
+        <li class="mobile-menu-item">About me</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/projects">
+        <li class="mobile-menu-item">Projects</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">SlashGordon</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/about">About me</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/projects">Projects</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">How I Resurrected My RNS 510 to Seal the Deal (Code Finder RNS510)</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2024-08-14 </span>
+        <div class="post-category">
+            <a href="/categories/code/"> code </a>
+            <a href="/categories/automotive/"> automotive </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#the-unexpected-roadblock">The Unexpected Roadblock</a></li>
+    <li><a href="#a-brute-force-solution">A Brute-Force Solution</a></li>
+    <li><a href="#building-the-rns510-code-finder">Building the RNS510 Code Finder</a></li>
+    <li><a href="#how-to-use-the-rns510-code-finder">How to Use the RNS510 Code Finder</a>
+      <ul>
+        <li><a href="#1-clone-the-repository">1. Clone the Repository</a></li>
+        <li><a href="#2-install-the-required-python-package">2. Install the Required Python Package</a></li>
+        <li><a href="#3-run-the-script">3. Run the Script</a></li>
+        <li><a href="#4-example-execution">4. Example Execution</a></li>
+      </ul>
+    </li>
+    <li><a href="#the-eureka-moment">The Eureka Moment</a></li>
+    <li><a href="#the-moral-of-the-story">The Moral of the Story</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <img src="/images/rns510/rns510_1.jpg" height="auto" width="200" style="float:left;padding:20px;border-radius:50%">
+
+<p>Upgrading your car&rsquo;s stereo system is one of those things that can breathe new life into an old vehicle. That’s exactly what I did with my trusty Volkswagen Tiguan. After years of dependable service, I decided it was time to upgrade to a newer, more feature-packed system. My old RNS 510, a reliable companion on countless road trips, was ready for a new home. But as I soon discovered, selling it wasn&rsquo;t going to be as straightforward as I thought.</p>
+<h2 id="the-unexpected-roadblock">The Unexpected Roadblock</h2>
+<p>The RNS 510 is a fantastic piece of tech, especially for its time, but like many automotive electronics, it comes with a security feature that’s both a blessing and a curse: the anti-theft protection code. When I first installed it, I was given a small card with a four-digit PIN code. This code was supposed to be kept in a safe place, and naturally, I put it somewhere so safe that I couldn’t find it when I needed it the most.</p>
+<p>Fast forward to the day of the sale. The buyer, an enthusiastic Volkswagen aficionado, was excited to take the RNS 510 off my hands. However, after installing the unit in his car, we hit an unexpected snag—the dreaded security code prompt. My heart sank as I realized I had no idea where the code was. Without it, the unit was essentially a brick, and the sale was hanging by a thread.</p>
+<h2 id="a-brute-force-solution">A Brute-Force Solution</h2>
+<p>Desperate to make the sale and avoid a deal falling through, I started searching for solutions. That’s when I stumbled upon the idea of brute-forcing the PIN. Now, before you get any ideas, let me clarify—this wasn’t about hacking or anything nefarious. It was about trying to recover something I already owned but had simply misplaced.</p>
+<p>After some digging, I realized that manually entering thousands of possible PIN combinations wasn’t practical. What I needed was a tool that could automate the process. That’s when the idea for the <strong>RNS510 Code Finder</strong> was born.</p>
+<h2 id="building-the-rns510-code-finder">Building the RNS510 Code Finder</h2>
+<p>Using Python, I wrote a script designed to communicate with the RNS 510 through a serial port and systematically test every possible PIN until it found the right one. The script, which I’ve since polished and shared as open-source, leverages the <code>pyserial</code> library to send commands to the RNS 510, read the responses, and log each attempt.</p>
+<p>Here&rsquo;s a quick rundown of how it works:</p>
+<ul>
+<li><strong>Serial Communication:</strong> The script connects to the RNS 510 via a COM port using the <code>pyserial</code> library.</li>
+<li><strong>Brute Force Method:</strong> It systematically tries every PIN within a specified range, logging each attempt.</li>
+<li><strong>Pin Verification:</strong> The script checks the device’s response to determine if the entered PIN is correct.</li>
+</ul>
+<h2 id="how-to-use-the-rns510-code-finder">How to Use the RNS510 Code Finder</h2>
+<p>If you find yourself in a similar situation—trying to sell your old RNS 510 but missing the PIN code—don’t worry. Here’s how you can use the RNS510 Code Finder to recover your code.</p>
+<h3 id="1-clone-the-repository">1. Clone the Repository</h3>
+<p>First, clone the RNS510 Code Finder repository from GitHub:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git clone https://github.com/SlashGordon/rns510-code-finder.git
+cd rns510-code-finder
+</code></pre></div><h3 id="2-install-the-required-python-package">2. Install the Required Python Package</h3>
+<p>Make sure you have Python installed, then install the <code>pyserial</code> library:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pip install pyserial
+</code></pre></div><h3 id="3-run-the-script">3. Run the Script</h3>
+<p>With your RNS 510 connected to your computer via a serial port, you can now run the script. In this example, we use <code>COM1</code> as the port, but be sure to replace it with the correct COM port for your device. You can also adjust the <code>--baudrate</code>, <code>--timeout</code>, <code>--start</code>, and <code>--stop</code> parameters as needed:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">python rns510_code_finder.py --portname COM1 --baudrate <span style="color:#ae81ff">9600</span> --timeout <span style="color:#ae81ff">2</span> --start <span style="color:#ae81ff">0</span> --stop <span style="color:#ae81ff">1999</span>
+</code></pre></div><p>The script will start testing PINs in the specified range, and if all goes well, it will find the correct code and display it in the terminal.</p>
+<h3 id="4-example-execution">4. Example Execution</h3>
+<p>Here’s an example of what you might see when running the script:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ python rns510_code_finder.py --portname COM1 --baudrate <span style="color:#ae81ff">115200</span> --timeout <span style="color:#ae81ff">1</span> --start <span style="color:#ae81ff">0</span> --stop <span style="color:#ae81ff">1999</span>
+2023-08-12 14:23:45,123 - INFO - Opened serial port COM1
+2023-08-12 14:23:45,124 - INFO - Trying code: <span style="color:#ae81ff">0000</span>
+2023-08-12 14:23:45,225 - INFO - Code <span style="color:#ae81ff">0000</span> is invalid.
+...
+2023-08-12 14:24:15,567 - INFO - Trying code: <span style="color:#ae81ff">1234</span>
+2023-08-12 14:24:15,668 - INFO - Code found: <span style="color:#ae81ff">1234</span>
+2023-08-12 14:24:15,669 - INFO - Closed serial port COM1
+</code></pre></div><p>Once the correct code is found, you can use it to unlock the RNS 510, making it fully functional again.</p>
+<h2 id="the-eureka-moment">The Eureka Moment</h2>
+<p>With the RNS510 Code Finder ready to go, I connected my PC to the RNS 510, set the script in motion, and watched as it began trying PIN after PIN. It was a tense few minutes—okay, it felt like hours—but then, like magic, the correct code was found. The RNS 510 powered up, ready to navigate and entertain once more.</p>
+
+
+<img src="/images/rns510/rns510_2.jpg" height="auto" width="200" style="float:left;padding:10px;border-radius:20%">
+<img src="/images/rns510/rns510_3.jpg" height="auto" width="200" style="float:left;padding:10px;border-radius:20%">
+
+<p>I quickly jotted down the code, shared it with the buyer, and watched his excitement as the RNS 510 roared back to life in his car. The sale was finalized, and both of us walked away happy. I had not only made the sale but also helped bring a piece of tech back from the brink of uselessness.</p>
+<h2 id="the-moral-of-the-story">The Moral of the Story</h2>
+<p>The experience taught me a few things: never underestimate the power of a little programming knowledge, and always keep your important codes somewhere you won’t forget them! If you ever find yourself in a similar situation, don’t panic. With the right tools and a bit of patience, you can recover what’s yours.</p>
+<p>If you’re curious about the tool I created, the <strong>RNS510 Code Finder</strong> is now available on GitHub. It’s a simple, effective solution for anyone who’s misplaced their PIN code and needs to unlock their RNS 510. Just remember, use it responsibly—only for devices you own.</p>
+<p>Feel free to check out the project, contribute, or even fork it for your own needs. Happy coding, and may all your old tech find new life!</p>
+<hr>
+<p><strong>GitHub Repository:</strong> <a href="https://github.com/SlashGordon/rns510-code-finder">RNS510 Code Finder</a><br>
+<strong>License:</strong> MIT License - Open for everyone to use, improve, and share.</p>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">SlashGordon</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2024-08-14
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/python/">python</a>
+          <a href="/tags/vw/">vw</a>
+          <a href="/tags/rns510/">rns510</a>
+          <a href="/tags/code/">code</a>
+          <a href="/tags/volkswagen/">Volkswagen</a>
+          <a href="/tags/anti-theft/">anti-theft</a>
+          <a href="/tags/car-electronics/">car electronics</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/debug_streamlit_in_vscode/">
+            <span class="next-text nav-default">Debug streamlit app in vscode</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:slash.gordon.dev@gmail.com%20" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/SlashGordon" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.instagram.com/mr.carlo.labrador/" class="iconfont icon-instagram" title="instagram"></a>
+  <a href="/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2019 - 
+    2024
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">2019</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  <script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+<script src="https://tarptaeya.github.io/repo-card/repo-card.js"></script>
+
+
+
+
+
+
+
+</body>
+</html>

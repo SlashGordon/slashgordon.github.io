@@ -6,10 +6,73 @@
     <description>Recent content in Tags on my private blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>2019</copyright>
-    <lastBuildDate>Thu, 27 Jan 2022 01:53:34 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 14 Aug 2024 01:53:34 +0800</lastBuildDate>
     
 	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>anti-theft</title>
+      <link>/tags/anti-theft/</link>
+      <pubDate>Wed, 14 Aug 2024 01:53:34 +0800</pubDate>
+      
+      <guid>/tags/anti-theft/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>car electronics</title>
+      <link>/tags/car-electronics/</link>
+      <pubDate>Wed, 14 Aug 2024 01:53:34 +0800</pubDate>
+      
+      <guid>/tags/car-electronics/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>code</title>
+      <link>/tags/code/</link>
+      <pubDate>Wed, 14 Aug 2024 01:53:34 +0800</pubDate>
+      
+      <guid>/tags/code/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>python</title>
+      <link>/tags/python/</link>
+      <pubDate>Wed, 14 Aug 2024 01:53:34 +0800</pubDate>
+      
+      <guid>/tags/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>rns510</title>
+      <link>/tags/rns510/</link>
+      <pubDate>Wed, 14 Aug 2024 01:53:34 +0800</pubDate>
+      
+      <guid>/tags/rns510/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Volkswagen</title>
+      <link>/tags/volkswagen/</link>
+      <pubDate>Wed, 14 Aug 2024 01:53:34 +0800</pubDate>
+      
+      <guid>/tags/volkswagen/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>vw</title>
+      <link>/tags/vw/</link>
+      <pubDate>Wed, 14 Aug 2024 01:53:34 +0800</pubDate>
+      
+      <guid>/tags/vw/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>debug</title>
@@ -17,15 +80,6 @@
       <pubDate>Thu, 27 Jan 2022 01:53:34 +0800</pubDate>
       
       <guid>/tags/debug/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>python</title>
-      <link>/tags/python/</link>
-      <pubDate>Thu, 27 Jan 2022 01:53:34 +0800</pubDate>
-      
-      <guid>/tags/python/</guid>
       <description></description>
     </item>
     
