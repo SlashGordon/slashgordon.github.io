@@ -6,10 +6,46 @@
     <description>Recent content in Tags on my private blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>2019</copyright>
-    <lastBuildDate>Wed, 14 Aug 2024 01:53:34 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 24 Sep 2024 01:53:34 +0800</lastBuildDate>
     
 	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>media</title>
+      <link>/tags/media/</link>
+      <pubDate>Tue, 24 Sep 2024 01:53:34 +0800</pubDate>
+      
+      <guid>/tags/media/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>mp3</title>
+      <link>/tags/mp3/</link>
+      <pubDate>Tue, 24 Sep 2024 01:53:34 +0800</pubDate>
+      
+      <guid>/tags/mp3/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>MuPiBox</title>
+      <link>/tags/mupibox/</link>
+      <pubDate>Tue, 24 Sep 2024 01:53:34 +0800</pubDate>
+      
+      <guid>/tags/mupibox/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>python</title>
+      <link>/tags/python/</link>
+      <pubDate>Tue, 24 Sep 2024 01:53:34 +0800</pubDate>
+      
+      <guid>/tags/python/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>anti-theft</title>
@@ -35,15 +71,6 @@
       <pubDate>Wed, 14 Aug 2024 01:53:34 +0800</pubDate>
       
       <guid>/tags/code/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>python</title>
-      <link>/tags/python/</link>
-      <pubDate>Wed, 14 Aug 2024 01:53:34 +0800</pubDate>
-      
-      <guid>/tags/python/</guid>
       <description></description>
     </item>
     

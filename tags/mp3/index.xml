@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>mp3 on my private blog</title>
+    <link>/tags/mp3/</link>
+    <description>Recent content in mp3 on my private blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>2019</copyright>
+    <lastBuildDate>Tue, 24 Sep 2024 01:53:34 +0800</lastBuildDate>
+    
+	<atom:link href="/tags/mp3/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Enhancing My Daughter&#39;s Mupibox Media Server with Cover Art</title>
+      <link>/post/cover_art_mp3/</link>
+      <pubDate>Tue, 24 Sep 2024 01:53:34 +0800</pubDate>
+      
+      <guid>/post/cover_art_mp3/</guid>
+      <description>Enhancing My Daughter&amp;rsquo;s MuPiBox Media Server with Cover Art My daughter loves her MuPiBox media server, which is packed with her favorite audiobooks and music. Recently, I decided to enhance her experience by adding cover art to each album. It’s a small touch, but seeing the album covers makes her browsing more enjoyable and visually appealing. Here’s how I added cover.jpg files to her MuPiBox media server.
+Tools and Libraries Used To achieve this, I used Python along with some handy libraries:</description>
+    </item>
+    
+  </channel>
+</rss>
