@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Eurojackpot on my private blog</title>
+    <link>/tags/eurojackpot/</link>
+    <description>Recent content in Eurojackpot on my private blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>2019</copyright>
+    <lastBuildDate>Mon, 28 Apr 2025 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/eurojackpot/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>How I Demonstrated the Real Cost of Playing Eurojackpot to My Father (Using Python)</title>
+      <link>/post/eurojackpot/</link>
+      <pubDate>Mon, 28 Apr 2025 00:00:00 +0000</pubDate>
+      
+      <guid>/post/eurojackpot/</guid>
+      <description>Introduction My father is an avid lottery player. Like many others, he dreams of winning the Eurojackpot and transforming his life overnight. As a programmer, I wanted to show him—using real data—how much money is actually lost over time by playing the lottery. To do this, I developed a Python script to analyze his Eurojackpot tickets and calculate the true cost of his hobby.
+Motivation Playing the lottery can be entertaining, but the odds are not in your favor.</description>
+    </item>
+    
+  </channel>
+</rss>

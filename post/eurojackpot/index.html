@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>How I Demonstrated the Real Cost of Playing Eurojackpot to My Father (Using Python) - my private blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="SlashGordon" /><meta name="description" content="A practical Python script to analyze Eurojackpot lottery tickets and illustrate why playing the lottery is a losing game." /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.72.0 with theme even" />
+
+
+<link rel="canonical" href="/post/eurojackpot/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.2e81bbed97b8b282c1aeb57488cc71c8d8c8ec559f3931531bd396bf31e0d4dd.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="How I Demonstrated the Real Cost of Playing Eurojackpot to My Father (Using Python)" />
+<meta property="og:description" content="A practical Python script to analyze Eurojackpot lottery tickets and illustrate why playing the lottery is a losing game." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/eurojackpot/" />
+<meta property="article:published_time" content="2025-04-28T00:00:00+00:00" />
+<meta property="article:modified_time" content="2025-04-28T00:00:00+00:00" />
+<meta itemprop="name" content="How I Demonstrated the Real Cost of Playing Eurojackpot to My Father (Using Python)">
+<meta itemprop="description" content="A practical Python script to analyze Eurojackpot lottery tickets and illustrate why playing the lottery is a losing game.">
+<meta itemprop="datePublished" content="2025-04-28T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2025-04-28T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="410">
+
+
+
+<meta itemprop="keywords" content="Python,Lottery,Eurojackpot,Data Analysis,Personal Finance," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="How I Demonstrated the Real Cost of Playing Eurojackpot to My Father (Using Python)"/>
+<meta name="twitter:description" content="A practical Python script to analyze Eurojackpot lottery tickets and illustrate why playing the lottery is a losing game."/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">SlashGordon</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/about">
+        <li class="mobile-menu-item">About me</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/projects">
+        <li class="mobile-menu-item">Projects</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">SlashGordon</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/about">About me</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/projects">Projects</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">How I Demonstrated the Real Cost of Playing Eurojackpot to My Father (Using Python)</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2025-04-28 </span>
+        
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#motivation">Motivation</a></li>
+    <li><a href="#the-script-how-it-works">The Script: How It Works</a>
+      <ul>
+        <li><a href="#key-features">Key Features</a></li>
+        <li><a href="#example-usage">Example Usage</a></li>
+        <li><a href="#what-youll-see">What You’ll See</a></li>
+      </ul>
+    </li>
+    <li><a href="#what-my-father-learned">What My Father Learned</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<img src="/images/money.jpg" height="auto" width="200" style="float:left;padding:20px;border-radius:50%">
+
+<h2 id="introduction">Introduction</h2>
+<p>My father is an avid lottery player. Like many others, he dreams of winning the Eurojackpot and transforming his life overnight. As a programmer, I wanted to show him—using real data—how much money is actually lost over time by playing the lottery. To do this, I developed a Python script to analyze his Eurojackpot tickets and calculate the true cost of his hobby.</p>
+<h2 id="motivation">Motivation</h2>
+<p>Playing the lottery can be entertaining, but the odds are not in your favor. I aimed to help my father see, in clear terms, how much he spends versus how much he wins. The goal wasn’t to take away his enjoyment but to encourage more informed spending and potentially save some money.</p>
+<h2 id="the-script-how-it-works">The Script: How It Works</h2>
+<p>The script retrieves official Eurojackpot results from Eurojackpot.de, compares them to your tickets, and calculates your total expenditure, total winnings, and net loss. It uses the <a href="https://docs.python-requests.org/">requests</a> library to fetch draw results, caches them locally, and supports custom ticket files.</p>
+<h3 id="key-features">Key Features</h3>
+<ul>
+<li><strong>Automated Data Retrieval:</strong> Downloads Eurojackpot results for every draw within a specified period.</li>
+<li><strong>Ticket Evaluation:</strong> Compares your tickets to the actual draws.</li>
+<li><strong>Spending &amp; Winnings Calculation:</strong> Sums up how much you spent and how much you won.</li>
+<li><strong>Detailed Logging:</strong> Provides comprehensive output for each draw and ticket.</li>
+</ul>
+<h3 id="example-usage">Example Usage</h3>
+<p>Save your tickets in a <code>tickets.json</code> file (as a list of lists, each containing 5 main numbers and 2 Euro numbers):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">[
+  [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">23</span>, <span style="color:#ae81ff">34</span>, <span style="color:#ae81ff">45</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">9</span>],
+  [<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">14</span>, <span style="color:#ae81ff">22</span>, <span style="color:#ae81ff">33</span>, <span style="color:#ae81ff">44</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">10</span>]
+]
+</code></pre></div><p>Run the script from the terminal:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">python howtolosemoneyfast.py --lookback-days <span style="color:#ae81ff">365</span> --ticket-file tickets.json --verbose
+</code></pre></div><h3 id="what-youll-see">What You’ll See</h3>
+<p>The script will display, for each draw, whether your tickets won anything. At the end, you’ll receive a summary like:</p>
+<pre><code>Total spent on tickets: 956.80€
+Total won: 0.00€
+Net loss: 956.80€
+</code></pre><h2 id="what-my-father-learned">What My Father Learned</h2>
+<p>After running the script, my father was taken aback by the results. Over a year, he had spent thousands of euros and won back almost nothing. This was a powerful, data-driven way to illustrate the real odds of the lottery.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>If you or someone you know enjoys playing the lottery, give this script a try! It’s a fun programming project and a great way to learn about probability, data analysis, and personal finance.</p>
+<p><strong>Remember:</strong> The best way to double your money at the lottery is to fold it in half and put it back in your pocket.</p>
+<hr>
+<p><em>Check out the <a href="https://github.com/SlashGordon/howtolosemoneyfast">GitHub repository</a> for the full code and instructions.</em></p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">SlashGordon</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2025-04-28
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/python/">Python</a>
+          <a href="/tags/lottery/">Lottery</a>
+          <a href="/tags/eurojackpot/">Eurojackpot</a>
+          <a href="/tags/data-analysis/">Data Analysis</a>
+          <a href="/tags/personal-finance/">Personal Finance</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/cadquery/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">From Button Chaos to Python Calm: Designing My Garden House with CadQuery</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/cover_art_mp3/">
+            <span class="next-text nav-default">Enhancing My Daughter&#39;s Mupibox Media Server with Cover Art</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:slash.gordon.dev@gmail.com%20" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/SlashGordon" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.instagram.com/mr.carlo.labrador/" class="iconfont icon-instagram" title="instagram"></a>
+  <a href="/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2019 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">2019</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  <script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+<script src="https://tarptaeya.github.io/repo-card/repo-card.js"></script>
+
+
+
+
+
+
+
+</body>
+</html>

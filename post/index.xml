@@ -6,10 +6,30 @@
     <description>Recent content in Posts on my private blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>2019</copyright>
-    <lastBuildDate>Tue, 24 Sep 2024 01:53:34 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 28 May 2025 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>From Button Chaos to Python Calm: Designing My Garden House with CadQuery</title>
+      <link>/post/cadquery/</link>
+      <pubDate>Wed, 28 May 2025 00:00:00 +0000</pubDate>
+      
+      <guid>/post/cadquery/</guid>
+      <description>I’ve always had a complicated relationship with CAD software. It’s not that I don’t appreciate the power of digital design tools—it’s just that they never seem to work with me.
+If you’ve ever opened a CAD program and been confronted with a swarm of buttons, tabs, and menus—only to watch them rearrange completely after a version update—you know what I’m talking about. Most CAD tutorials aren’t much help either. They typically go something like: “Click here, then here, now switch to this tab, drag this, click this tiny icon that has moved since last version…” You get the idea.</description>
+    </item>
+    
+    <item>
+      <title>How I Demonstrated the Real Cost of Playing Eurojackpot to My Father (Using Python)</title>
+      <link>/post/eurojackpot/</link>
+      <pubDate>Mon, 28 Apr 2025 00:00:00 +0000</pubDate>
+      
+      <guid>/post/eurojackpot/</guid>
+      <description>Introduction My father is an avid lottery player. Like many others, he dreams of winning the Eurojackpot and transforming his life overnight. As a programmer, I wanted to show him—using real data—how much money is actually lost over time by playing the lottery. To do this, I developed a Python script to analyze his Eurojackpot tickets and calculate the true cost of his hobby.
+Motivation Playing the lottery can be entertaining, but the odds are not in your favor.</description>
+    </item>
     
     <item>
       <title>Enhancing My Daughter&#39;s Mupibox Media Server with Cover Art</title>
