@@ -53,6 +53,35 @@ Tools and Libraries Used To achieve this, I used Python along with some handy li
     </item>
     
     <item>
+      <title>Impressum</title>
+      <link>/impressum/</link>
+      <pubDate>Mon, 01 May 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/impressum/</guid>
+      <description>Legal Disclosure Information in accordance with Section 5 TMG
+Contact Information Name: 
+Address:
+
+
+Phone: 
+Email: Contact Email
+Responsible for content according to § 55(2) RStV 
+
+
+Disclaimer Liability for Content The contents of our pages have been created with the utmost care. However, we cannot guarantee the contents&amp;rsquo; accuracy, completeness, or topicality. According to statutory provisions, we are responsible for our own content on these web pages.</description>
+    </item>
+    
+    <item>
+      <title>Privacy Policy</title>
+      <link>/privacy/</link>
+      <pubDate>Mon, 01 May 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/privacy/</guid>
+      <description>Privacy Policy 1. Overview This privacy policy explains what information is collected when you visit this website, and how it is used.
+2. GitHub Pages This website is hosted on GitHub Pages. GitHub may collect personal information from visitors, including logs of visitor IP addresses, to comply with legal obligations and to maintain the security and integrity of the website and service. For more information, see the GitHub Privacy Statement.</description>
+    </item>
+    
+    <item>
       <title>Debug streamlit app in vscode</title>
       <link>/post/debug_streamlit_in_vscode/</link>
       <pubDate>Thu, 27 Jan 2022 01:53:34 +0800</pubDate>
