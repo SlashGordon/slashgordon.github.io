@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Development on my private blog</title>
+    <link>/categories/development/</link>
+    <description>Recent content in Development on my private blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>2019</copyright>
+    <lastBuildDate>Wed, 18 Jun 2025 01:53:34 +0800</lastBuildDate>
+    
+	<atom:link href="/categories/development/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Solving Let&#39;s Encrypt Challenges with SCP for Limited Web Hosting</title>
+      <link>/post/acme_scp_solver/</link>
+      <pubDate>Wed, 18 Jun 2025 01:53:34 +0800</pubDate>
+      
+      <guid>/post/acme_scp_solver/</guid>
+      <description>The Problem: Limited Domain Hosting Without API Access If you&amp;rsquo;ve ever tried to set up SSL certificates with Let&amp;rsquo;s Encrypt on a domain hosting provider that doesn&amp;rsquo;t offer API access, you know the struggle. My situation was particularly challenging:
+ My domain is hosted with a provider that doesn&amp;rsquo;t offer any API for automated certificate management My web space is limited, making it difficult to run a full ACME client directly on the server I needed to automate the certificate renewal process to avoid manual intervention every 90 days  The standard approach for Let&amp;rsquo;s Encrypt validation is to place a specific challenge file in the .</description>
+    </item>
+    
+  </channel>
+</rss>

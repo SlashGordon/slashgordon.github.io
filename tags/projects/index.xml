@@ -17,7 +17,7 @@
       
       <guid>/projects/</guid>
       <description>Projects Here is a list of my private projects. All sources are hosted on github.
-       </description>
+Finance &amp;amp; Trading  howtolosemoneyfast - Lottery simulator: Play Lotto, Lose Money, Repeat. It&amp;rsquo;s Science! howtolosemoneyfast_web - Website for the lottery simulator optimizer-weekly - Weekly portfolio optimization tool run_strategies - Trading strategy execution framework gotrader - Alpaca trading bot written in Go  DevOps &amp;amp; Infrastructure  docker-aws-cdk-v2 - Up-to-date Docker image for AWS CDK v2 with Python packages docker-aws-cdk - Docker image for AWS CDK with Python packages lego-scp-solver - Custom ACME challenge solvers for Let&amp;rsquo;s Encrypt  Utilities &amp;amp; Tools  buchhaltung - PDF invoice renamer based on content and rules rns510-code-finder - VW RNS510 stereo code calculator StayAlive - Mouse movement simulator to keep PC active pyeasysocket - Simplified Python TCP/UDP socket library pyjdpu - Jenkins Docker plugin updater  CAD &amp;amp; Modeling  gartenhaus - CadQuery 3D model for garden house construction  Web &amp;amp; Documentation  blog - Personal Hugo blog slashgordon.</description>
     </item>
     
   </channel>

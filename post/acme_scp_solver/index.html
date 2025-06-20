@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Solving Let&#39;s Encrypt Challenges with SCP for Limited Web Hosting - my private blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="SlashGordon" /><meta name="description" content="The Problem: Limited Domain Hosting Without API Access If you&amp;rsquo;ve ever tried to set up SSL certificates with Let&amp;rsquo;s Encrypt on a domain hosting provider that doesn&amp;rsquo;t offer API access, you know the struggle. My situation was particularly challenging:
+ My domain is hosted with a provider that doesn&amp;rsquo;t offer any API for automated certificate management My web space is limited, making it difficult to run a full ACME client directly on the server I needed to automate the certificate renewal process to avoid manual intervention every 90 days  The standard approach for Let&amp;rsquo;s Encrypt validation is to place a specific challenge file in the ." /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.72.0 with theme even" />
+
+
+<link rel="canonical" href="/post/acme_scp_solver/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+<link href="/sass/main.min.2e81bbed97b8b282c1aeb57488cc71c8d8c8ec559f3931531bd396bf31e0d4dd.css" rel="stylesheet">
+<link rel="stylesheet" href="/lib/fancybox/jquery.fancybox-3.1.20.min.css">
+<link rel="stylesheet" href="/css/cookie-consent.css">
+
+
+<link rel="stylesheet" href="/css/custom.css">
+<link rel="stylesheet" href="/css/cookie-consent.css">
+
+
+
+
+
+<meta property="og:title" content="Solving Let&#39;s Encrypt Challenges with SCP for Limited Web Hosting" />
+<meta property="og:description" content="The Problem: Limited Domain Hosting Without API Access If you&rsquo;ve ever tried to set up SSL certificates with Let&rsquo;s Encrypt on a domain hosting provider that doesn&rsquo;t offer API access, you know the struggle. My situation was particularly challenging:
+ My domain is hosted with a provider that doesn&rsquo;t offer any API for automated certificate management My web space is limited, making it difficult to run a full ACME client directly on the server I needed to automate the certificate renewal process to avoid manual intervention every 90 days  The standard approach for Let&rsquo;s Encrypt validation is to place a specific challenge file in the ." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/acme_scp_solver/" />
+<meta property="article:published_time" content="2025-06-18T01:53:34+08:00" />
+<meta property="article:modified_time" content="2025-06-18T01:53:34+08:00" />
+<meta itemprop="name" content="Solving Let&#39;s Encrypt Challenges with SCP for Limited Web Hosting">
+<meta itemprop="description" content="The Problem: Limited Domain Hosting Without API Access If you&rsquo;ve ever tried to set up SSL certificates with Let&rsquo;s Encrypt on a domain hosting provider that doesn&rsquo;t offer API access, you know the struggle. My situation was particularly challenging:
+ My domain is hosted with a provider that doesn&rsquo;t offer any API for automated certificate management My web space is limited, making it difficult to run a full ACME client directly on the server I needed to automate the certificate renewal process to avoid manual intervention every 90 days  The standard approach for Let&rsquo;s Encrypt validation is to place a specific challenge file in the .">
+<meta itemprop="datePublished" content="2025-06-18T01:53:34&#43;08:00" />
+<meta itemprop="dateModified" content="2025-06-18T01:53:34&#43;08:00" />
+<meta itemprop="wordCount" content="1443">
+
+
+
+<meta itemprop="keywords" content="golang,letsencrypt,acme,ssl,certificates,webhosting," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Solving Let&#39;s Encrypt Challenges with SCP for Limited Web Hosting"/>
+<meta name="twitter:description" content="The Problem: Limited Domain Hosting Without API Access If you&rsquo;ve ever tried to set up SSL certificates with Let&rsquo;s Encrypt on a domain hosting provider that doesn&rsquo;t offer API access, you know the struggle. My situation was particularly challenging:
+ My domain is hosted with a provider that doesn&rsquo;t offer any API for automated certificate management My web space is limited, making it difficult to run a full ACME client directly on the server I needed to automate the certificate renewal process to avoid manual intervention every 90 days  The standard approach for Let&rsquo;s Encrypt validation is to place a specific challenge file in the ."/>
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">SlashGordon</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/about">
+        <li class="mobile-menu-item">About me</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/projects">
+        <li class="mobile-menu-item">Projects</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">SlashGordon</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/about">About me</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/projects">Projects</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Solving Let&#39;s Encrypt Challenges with SCP for Limited Web Hosting</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2025-06-18 </span>
+        <div class="post-category">
+            <a href="/categories/development/"> Development </a>
+            <a href="/categories/security/"> Security </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#the-problem-limited-domain-hosting-without-api-access">The Problem: Limited Domain Hosting Without API Access</a></li>
+    <li><a href="#enter-lego-scp-solver">Enter Lego-SCP-Solver</a></li>
+    <li><a href="#how-it-works">How It Works</a></li>
+    <li><a href="#setting-up-and-using-the-tool">Setting Up and Using the Tool</a></li>
+    <li><a href="#automating-with-github-actions">Automating with GitHub Actions</a></li>
+    <li><a href="#benefits-of-this-approach">Benefits of This Approach</a></li>
+    <li><a href="#the-lego-acme-library-a-powerful-foundation">The Lego ACME Library: A Powerful Foundation</a></li>
+    <li><a href="#the-easier-alternative-using-supported-dns-providers">The Easier Alternative: Using Supported DNS Providers</a>
+      <ul>
+        <li><a href="#key-features-of-lego">Key Features of Lego</a></li>
+      </ul>
+    </li>
+    <li><a href="#writing-a-custom-challenge-solver">Writing a Custom Challenge Solver</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="the-problem-limited-domain-hosting-without-api-access">The Problem: Limited Domain Hosting Without API Access</h2>
+<p>If you&rsquo;ve ever tried to set up SSL certificates with Let&rsquo;s Encrypt on a domain hosting provider that doesn&rsquo;t offer API access, you know the struggle. My situation was particularly challenging:</p>
+<ol>
+<li>My domain is hosted with a provider that doesn&rsquo;t offer any API for automated certificate management</li>
+<li>My web space is limited, making it difficult to run a full ACME client directly on the server</li>
+<li>I needed to automate the certificate renewal process to avoid manual intervention every 90 days</li>
+</ol>
+<p>The standard approach for Let&rsquo;s Encrypt validation is to place a specific challenge file in the <code>.well-known/acme-challenge/</code> directory of your website. But how do you do this when you can&rsquo;t run software directly on your hosting provider?</p>
+<h2 id="enter-lego-scp-solver">Enter Lego-SCP-Solver</h2>
+<p>To solve this problem, I created a Go-based tool that leverages the excellent <a href="https://github.com/go-acme/lego">lego ACME client library</a> with a custom challenge solver that uses SCP (Secure Copy Protocol) to upload the challenge files to my web server.</p>
+<p>The tool works by:</p>
+<ol>
+<li>Connecting to your web server via SSH</li>
+<li>Creating the required <code>.well-known/acme-challenge/</code> directory</li>
+<li>Uploading the challenge token file via SCP</li>
+<li>Verifying the file is accessible via HTTP</li>
+<li>Cleaning up after the challenge is complete</li>
+</ol>
+<p>This approach allows me to run the certificate issuance process from my local machine or a CI/CD pipeline, without needing to install anything on the web server itself.</p>
+<h2 id="how-it-works">How It Works</h2>
+<p>The core of the solution is a custom HTTP-01 challenge provider that implements the lego challenge interface. Here&rsquo;s a simplified version of how it works:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// Present implements the challenge.Provider interface
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">SCPSolver</span>) <span style="color:#a6e22e">Present</span>(<span style="color:#a6e22e">domain</span>, <span style="color:#a6e22e">token</span>, <span style="color:#a6e22e">keyAuth</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">error</span> {
+    <span style="color:#75715e">// Connect to SSH
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">connect</span>(); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;SSH connection failed: %w&#34;</span>, <span style="color:#a6e22e">err</span>)
+    }
+    <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">sshClient</span>.<span style="color:#a6e22e">Close</span>()
+
+    <span style="color:#75715e">// Create remote directory
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">remotePath</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">webrootPath</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;/.well-known/acme-challenge&#34;</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">createRemoteDir</span>(<span style="color:#a6e22e">remotePath</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;failed to create remote directory: %w&#34;</span>, <span style="color:#a6e22e">err</span>)
+    }
+
+    <span style="color:#75715e">// Upload challenge file
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">remoteFile</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">remotePath</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;/&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">token</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">uploadFile</span>(<span style="color:#a6e22e">remoteFile</span>, <span style="color:#a6e22e">keyAuth</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;failed to upload challenge file: %w&#34;</span>, <span style="color:#a6e22e">err</span>)
+    }
+
+    <span style="color:#75715e">// Set proper permissions for web server access
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">setPermissions</span>(<span style="color:#a6e22e">remotePath</span>, <span style="color:#a6e22e">remoteFile</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Warning: Failed to set permissions: %v&#34;</span>, <span style="color:#a6e22e">err</span>)
+    }
+
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+}
+</code></pre></div><p>When Let&rsquo;s Encrypt needs to validate domain ownership, this code:</p>
+<ol>
+<li>Establishes an SSH connection to the web server</li>
+<li>Creates the challenge directory if it doesn&rsquo;t exist</li>
+<li>Uploads the challenge token with the correct content</li>
+<li>Sets appropriate permissions so the web server can serve the file</li>
+</ol>
+<p>After validation, a similar cleanup function removes the challenge file.</p>
+<h2 id="setting-up-and-using-the-tool">Setting Up and Using the Tool</h2>
+<p>Using the tool is straightforward. You can either set environment variables:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">export LEGO_SCP_HOST<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;your-server.com&#34;</span>
+export LEGO_SCP_USER<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;your-username&#34;</span>
+export LEGO_SCP_KEY_PATH<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/path/to/your/ssh/private/key&#34;</span>
+export LEGO_SCP_WEBROOT_PATH<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/var/www/html&#34;</span>
+export LEGO_SCP_EMAIL<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;your-email@example.com&#34;</span>
+export LEGO_SCP_DOMAINS<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;example.com,www.example.com&#34;</span>
+export LEGO_SCP_ACCOUNT_KEY<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/path/to/account.key&#34;</span>
+export LEGO_SCP_CERT_PATH<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/path/to/certificates&#34;</span>
+</code></pre></div><p>Or use command-line flags:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">lego-scp-solver -e your-email@example.com -d example.com,www.example.com <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>  --scp-host your-server.com --scp-user username --scp-key ~/.ssh/id_rsa <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>  --scp-webroot /var/www/html --cert-path ./certificates
+</code></pre></div><h2 id="automating-with-github-actions">Automating with GitHub Actions</h2>
+<p>To fully automate the certificate renewal process, I set up a GitHub Actions workflow that runs the tool on a schedule:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">name</span>: Renew SSL Certificates
+
+<span style="color:#66d9ef">on</span>:
+  <span style="color:#66d9ef">schedule</span>:
+    - <span style="color:#66d9ef">cron</span>: <span style="color:#e6db74">&#34;0 0 1 * *&#34;</span> <span style="color:#75715e"># Run on the 1st of every month</span>
+  <span style="color:#66d9ef">workflow_dispatch</span>: <span style="color:#75715e"># Allow manual triggering</span>
+
+<span style="color:#66d9ef">jobs</span>:
+  <span style="color:#66d9ef">renew</span>:
+    <span style="color:#66d9ef">runs-on</span>: ubuntu-latest
+    <span style="color:#66d9ef">steps</span>:
+      - <span style="color:#66d9ef">uses</span>: actions/checkout@v4
+
+      - <span style="color:#66d9ef">name</span>: Set up Go
+        <span style="color:#66d9ef">uses</span>: actions/setup-go@v5
+        <span style="color:#66d9ef">with</span>:
+          <span style="color:#66d9ef">go-version</span>: <span style="color:#e6db74">&#34;1.21&#34;</span>
+
+      - <span style="color:#66d9ef">name</span>: Setup SSH key
+        <span style="color:#66d9ef">run</span>: <span style="color:#e6db74">|
+</span><span style="color:#e6db74">          mkdir -p ~/.ssh</span>
+          echo <span style="color:#e6db74">&#34;${{ secrets.SSH_PRIVATE_KEY }}&#34;</span> &gt; ~/.ssh/id_rsa
+          chmod <span style="color:#ae81ff">600</span> ~/.ssh/id_rsa
+
+      - <span style="color:#66d9ef">name</span>: Run certificate renewal
+        <span style="color:#66d9ef">env</span>:
+          <span style="color:#66d9ef">LEGO_SCP_HOST</span>: ${{ secrets.SCP_HOST }}
+          <span style="color:#66d9ef">LEGO_SCP_USER</span>: ${{ secrets.SCP_USER }}
+          <span style="color:#66d9ef">LEGO_SCP_KEY_PATH</span>: ~/.ssh/id_rsa
+          <span style="color:#66d9ef">LEGO_SCP_WEBROOT_PATH</span>: ${{ secrets.WEBROOT_PATH }}
+          <span style="color:#66d9ef">LEGO_SCP_EMAIL</span>: ${{ secrets.ACME_EMAIL }}
+          <span style="color:#66d9ef">LEGO_SCP_DOMAINS</span>: ${{ secrets.DOMAINS }}
+          <span style="color:#66d9ef">LEGO_SCP_ACCOUNT_KEY</span>: account.key
+        <span style="color:#66d9ef">run</span>: <span style="color:#e6db74">|
+</span><span style="color:#e6db74">          go run .</span>
+
+      - <span style="color:#66d9ef">name</span>: Upload certificates
+        <span style="color:#66d9ef">uses</span>: actions/upload-artifact@v3
+        <span style="color:#66d9ef">with</span>:
+          <span style="color:#66d9ef">name</span>: certificates
+          <span style="color:#66d9ef">path</span>: ./<span style="color:#75715e">*.crt</span>
+</code></pre></div><p>This workflow securely stores all sensitive information in GitHub Secrets and runs the certificate renewal process automatically.</p>
+<h2 id="benefits-of-this-approach">Benefits of This Approach</h2>
+<ol>
+<li><strong>No server-side installation required</strong>: Works with any hosting provider that offers SSH/SCP access</li>
+<li><strong>Fully automated</strong>: Set it and forget it - certificates renew automatically</li>
+<li><strong>Secure</strong>: Uses SSH key authentication for secure file transfers</li>
+<li><strong>Flexible</strong>: Works with multiple domains and subdomains</li>
+<li><strong>Lightweight</strong>: Minimal dependencies and resource usage</li>
+</ol>
+<h2 id="the-lego-acme-library-a-powerful-foundation">The Lego ACME Library: A Powerful Foundation</h2>
+<p><a href="https://github.com/go-acme/lego">Lego</a> is a Let&rsquo;s Encrypt client and ACME library written in Go. It provides a complete solution for obtaining, renewing, and revoking SSL certificates from Let&rsquo;s Encrypt and other ACME-compatible certificate authorities.</p>
+<p>What makes Lego particularly powerful is its extensibility. It supports multiple challenge types (HTTP-01, DNS-01, TLS-ALPN-01) and comes with built-in providers for many popular DNS services and hosting platforms. However, its true strength lies in its ability to be extended with custom challenge solvers.</p>
+<h2 id="the-easier-alternative-using-supported-dns-providers">The Easier Alternative: Using Supported DNS Providers</h2>
+<p>While my SCP solution works well for my specific constraints, I should mention that there&rsquo;s an easier path if you have the flexibility to choose your domain registrar or DNS provider. Lego has built-in support for <a href="https://go-acme.github.io/lego/dns/">over 150 DNS providers</a>, making certificate issuance much simpler if you use one of these services.</p>
+<p>With DNS-01 validation through a supported provider, you can:</p>
+<ul>
+<li>Issue wildcard certificates (which isn&rsquo;t possible with HTTP validation)</li>
+<li>Validate domains without exposing your web server to the internet</li>
+<li>Automate the entire process without custom code</li>
+<li>Issue certificates even when port 80 is blocked</li>
+</ul>
+<p>When using DNS-01 validation, Lego creates a TXT record at <code>_acme-challenge.yourdomain.com</code> that Let&rsquo;s Encrypt verifies. You can check this record yourself using nslookup:</p>
+<pre><code>$ nslookup -q=TXT _acme-challenge.yourdomain.com 8.8.8.8
+Server:		8.8.8.8
+Address:	8.8.8.8#53
+
+Non-authoritative answer:
+_acme-challenge.yourdomain.com	text = &quot;IyxgKAO2vD-GRuMQgJfDKI8zcJRZwjTkYOv_xgAQmq4&quot;
+
+Authoritative answers can be found from:
+yourdomain.com	nameserver = ns1.example-dns.com.
+yourdomain.com	nameserver = ns2.example-dns.com.
+</code></pre><p>This TXT record contains the validation token that proves you control the domain.</p>
+<p>If you&rsquo;re starting a new project or can migrate your DNS, consider using one of these supported providers:</p>
+<ul>
+<li>AWS Route 53</li>
+<li>Cloudflare</li>
+<li>DigitalOcean</li>
+<li>Google Cloud DNS</li>
+<li>Azure DNS</li>
+<li>OVH</li>
+<li>Namecheap</li>
+<li>And <a href="https://go-acme.github.io/lego/dns/">many more</a></li>
+</ul>
+<p>With these providers, certificate issuance is as simple as:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">lego --email you@example.com --domains example.com --dns provider-name --dns.resolvers 1.1.1.1 run
+</code></pre></div><p>This approach eliminates the need for custom challenge solvers like my SCP solution. However, if you&rsquo;re stuck with a hosting provider that isn&rsquo;t on the list (as I was), then a custom solution like lego-scp-solver becomes necessary.</p>
+<h3 id="key-features-of-lego">Key Features of Lego</h3>
+<ul>
+<li>Complete ACME protocol implementation</li>
+<li>Support for multiple challenge types</li>
+<li>Built-in providers for many DNS services</li>
+<li>Certificate management (obtain, renew, revoke)</li>
+<li>Library mode for integration into other Go applications</li>
+<li>Command-line tool for standalone use</li>
+</ul>
+<h2 id="writing-a-custom-challenge-solver">Writing a Custom Challenge Solver</h2>
+<p>One of the most powerful aspects of Lego is the ability to write custom challenge solvers. The <a href="https://go-acme.github.io/lego/usage/library/writing-a-challenge-solver/">official documentation</a> provides a clear guide on how to do this.</p>
+<p>To create a custom challenge solver, you need to implement the appropriate provider interface. For HTTP-01 challenges (like in my SCP solver), you implement the <code>challenge.Provider</code> interface, which requires two methods:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Provider</span> <span style="color:#66d9ef">interface</span> {
+    <span style="color:#a6e22e">Present</span>(<span style="color:#a6e22e">domain</span>, <span style="color:#a6e22e">token</span>, <span style="color:#a6e22e">keyAuth</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">error</span>
+    <span style="color:#a6e22e">CleanUp</span>(<span style="color:#a6e22e">domain</span>, <span style="color:#a6e22e">token</span>, <span style="color:#a6e22e">keyAuth</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">error</span>
+}
+</code></pre></div><p>The <code>Present</code> method is called when the challenge needs to be set up, and <code>CleanUp</code> is called after the challenge is complete. This simple interface makes it easy to implement custom solutions for any hosting environment.</p>
+<p>Here&rsquo;s a basic template for creating a custom HTTP-01 challenge solver:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">MyCustomSolver</span> <span style="color:#66d9ef">struct</span> {
+    <span style="color:#75715e">// Your configuration fields here
+</span><span style="color:#75715e"></span>}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewMyCustomSolver</span>(<span style="color:#a6e22e">config</span> <span style="color:#a6e22e">YourConfig</span>) <span style="color:#f92672">*</span><span style="color:#a6e22e">MyCustomSolver</span> {
+    <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">MyCustomSolver</span>{
+        <span style="color:#75715e">// Initialize with your config
+</span><span style="color:#75715e"></span>    }
+}
+
+<span style="color:#75715e">// Present implements the challenge.Provider interface
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">MyCustomSolver</span>) <span style="color:#a6e22e">Present</span>(<span style="color:#a6e22e">domain</span>, <span style="color:#a6e22e">token</span>, <span style="color:#a6e22e">keyAuth</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">error</span> {
+    <span style="color:#75715e">// 1. Create the challenge directory if needed
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// 2. Create the challenge file with keyAuth as content
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// 3. Make it accessible via HTTP
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+}
+
+<span style="color:#75715e">// CleanUp implements the challenge.Provider interface
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">MyCustomSolver</span>) <span style="color:#a6e22e">CleanUp</span>(<span style="color:#a6e22e">domain</span>, <span style="color:#a6e22e">token</span>, <span style="color:#a6e22e">keyAuth</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">error</span> {
+    <span style="color:#75715e">// Remove the challenge file
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+}
+
+<span style="color:#75715e">// Then in your main code:
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#75715e">// ... initialize lego client
+</span><span style="color:#75715e"></span>
+    <span style="color:#a6e22e">mySolver</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">NewMyCustomSolver</span>(<span style="color:#a6e22e">config</span>)
+    <span style="color:#a6e22e">client</span>.<span style="color:#a6e22e">Challenge</span>.<span style="color:#a6e22e">SetHTTP01Provider</span>(<span style="color:#a6e22e">mySolver</span>)
+
+    <span style="color:#75715e">// ... proceed with certificate request
+</span><span style="color:#75715e"></span>}
+</code></pre></div><p>This flexibility allowed me to create the SCP-based solver for my specific hosting environment constraints.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>If you&rsquo;re stuck with a web hosting provider that doesn&rsquo;t offer Let&rsquo;s Encrypt integration or API access, this tool might be just what you need. It bridges the gap between modern automated certificate management and traditional web hosting environments.</p>
+<p>The power of Lego&rsquo;s extensible architecture makes it possible to solve unique challenges like limited web hosting environments. By implementing a custom challenge solver, I was able to automate certificate management even with the constraints of my hosting provider.</p>
+<p>The full source code is available on <a href="https://github.com/SlashGordon/lego-scp-solver">GitHub</a> under the MIT license. Feel free to use it, fork it, or contribute to make it even better!</p>
+<p>Remember, everyone deserves free, automated SSL certificates - even if your hosting provider hasn&rsquo;t caught up with the times yet.</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">SlashGordon</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2025-06-18
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/golang/">golang</a>
+          <a href="/tags/letsencrypt/">letsencrypt</a>
+          <a href="/tags/acme/">acme</a>
+          <a href="/tags/ssl/">ssl</a>
+          <a href="/tags/certificates/">certificates</a>
+          <a href="/tags/webhosting/">webhosting</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/cadquery/">
+            <span class="next-text nav-default">From Button Chaos to Python Calm: Designing My Garden House with CadQuery</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:slash.gordon.dev@gmail.com%20" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/SlashGordon" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.instagram.com/mr.carlo.labrador/" class="iconfont icon-instagram" title="instagram"></a>
+  <a href="/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2019 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">2019</span>
+  </span>
+  <div class="legal-links">
+    <a href="/impressum">Impressum</a> | <a href="/privacy">Privacy Policy</a>
+  </div>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  <script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+  <script src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script><script></script><script src="/lib/flowchart/raphael-2.2.7.min.js"></script> <script src="/lib/flowchart/flowchart-1.8.0.min.js"></script><script></script><script src="/lib/sequence/webfontloader-1.6.28.js"></script> <script src="/lib/sequence/snap.svg-0.5.1.min.js"></script> <script src="/lib/sequence/underscore-1.8.3.min.js"></script> <script src="/lib/sequence/sequence-diagram-2.0.1.min.js"></script>
+    <link rel="stylesheet" href="/lib/sequence/sequence-diagram-2.0.1.min.css">
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+
+
+
+
+
+
+
+
+<script src="/js/cookie-consent.js"></script>
+
+
+<script src="/js/contact-obfuscation.js"></script>
+<script src="/js/cookie-consent.js"></script>
+
+
+</body>
+</html>

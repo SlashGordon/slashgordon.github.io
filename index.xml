@@ -6,10 +6,20 @@
     <description>Recent content on my private blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>2019</copyright>
-    <lastBuildDate>Wed, 28 May 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 18 Jun 2025 01:53:34 +0800</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Solving Let&#39;s Encrypt Challenges with SCP for Limited Web Hosting</title>
+      <link>/post/acme_scp_solver/</link>
+      <pubDate>Wed, 18 Jun 2025 01:53:34 +0800</pubDate>
+      
+      <guid>/post/acme_scp_solver/</guid>
+      <description>The Problem: Limited Domain Hosting Without API Access If you&amp;rsquo;ve ever tried to set up SSL certificates with Let&amp;rsquo;s Encrypt on a domain hosting provider that doesn&amp;rsquo;t offer API access, you know the struggle. My situation was particularly challenging:
+ My domain is hosted with a provider that doesn&amp;rsquo;t offer any API for automated certificate management My web space is limited, making it difficult to run a full ACME client directly on the server I needed to automate the certificate renewal process to avoid manual intervention every 90 days  The standard approach for Let&amp;rsquo;s Encrypt validation is to place a specific challenge file in the .</description>
+    </item>
     
     <item>
       <title>From Button Chaos to Python Calm: Designing My Garden House with CadQuery</title>
@@ -165,7 +175,7 @@ A friend of mine told me that he is able to connect to other network clients out
       
       <guid>/projects/</guid>
       <description>Projects Here is a list of my private projects. All sources are hosted on github.
-       </description>
+Finance &amp;amp; Trading  howtolosemoneyfast - Lottery simulator: Play Lotto, Lose Money, Repeat. It&amp;rsquo;s Science! howtolosemoneyfast_web - Website for the lottery simulator optimizer-weekly - Weekly portfolio optimization tool run_strategies - Trading strategy execution framework gotrader - Alpaca trading bot written in Go  DevOps &amp;amp; Infrastructure  docker-aws-cdk-v2 - Up-to-date Docker image for AWS CDK v2 with Python packages docker-aws-cdk - Docker image for AWS CDK with Python packages lego-scp-solver - Custom ACME challenge solvers for Let&amp;rsquo;s Encrypt  Utilities &amp;amp; Tools  buchhaltung - PDF invoice renamer based on content and rules rns510-code-finder - VW RNS510 stereo code calculator StayAlive - Mouse movement simulator to keep PC active pyeasysocket - Simplified Python TCP/UDP socket library pyjdpu - Jenkins Docker plugin updater  CAD &amp;amp; Modeling  gartenhaus - CadQuery 3D model for garden house construction  Web &amp;amp; Documentation  blog - Personal Hugo blog slashgordon.</description>
     </item>
     
   </channel>
