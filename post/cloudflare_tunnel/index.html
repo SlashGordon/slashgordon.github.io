@@ -162,6 +162,7 @@ In this guide, we&rsquo;ll walk through setting up:"/>
   <ul>
     <li><a href="#introduction">Introduction</a></li>
     <li><a href="#1-the-architecture">1. The Architecture</a></li>
+    <li><a href="#2-the-complete-docker-compose-configuration">2. The Complete Docker Compose Configuration</a></li>
     <li><a href="#3-cloudflare-tunnel-configuration">3. Cloudflare Tunnel Configuration</a>
       <ul>
         <li><a href="#public-hostname-configuration">Public Hostname Configuration</a></li>
@@ -204,8 +205,9 @@ In this guide, we&rsquo;ll walk through setting up:"/>
 <ul>
 <li><strong>Docker Bridge Network</strong>: We use a dedicated network (<code>app_network</code>) that allows the tunnel container to communicate with Gitea and Jellyfin using container names as DNS entries.</li>
 <li><strong>Zero Port Forwarding</strong>: All traffic flows through Cloudflare&rsquo;s global network, eliminating the need to expose your home IP or open router ports.</li>
-<li><strong>Service Isolation</strong>: Each service runs in its own container with clearly defined networking boundaries.## 2. The Complete Docker Compose Configuration</li>
+<li><strong>Service Isolation</strong>: Each service runs in its own container with clearly defined networking boundaries.</li>
 </ul>
+<h2 id="2-the-complete-docker-compose-configuration">2. The Complete Docker Compose Configuration</h2>
 <p>This configuration orchestrates all three services: Gitea (Git server), Jellyfin (media server), and the Cloudflare Tunnel for secure external access.</p>
 <p><strong>Save this as <code>docker-compose.yml</code> on your Synology:</strong></p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">version</span>: <span style="color:#e6db74">&#34;3.9&#34;</span>
