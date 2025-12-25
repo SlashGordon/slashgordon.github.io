@@ -6,10 +6,20 @@
     <description>Recent content on my private blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>2019</copyright>
-    <lastBuildDate>Wed, 18 Jun 2025 01:53:34 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 25 Dec 2025 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Mastering the Home Lab: Gitea &amp; Jellyfin on Synology via Cloudflare Tunnel</title>
+      <link>/post/cloudflare_tunnel/</link>
+      <pubDate>Thu, 25 Dec 2025 00:00:00 +0000</pubDate>
+      
+      <guid>/post/cloudflare_tunnel/</guid>
+      <description>Introduction Self-hosting a private Git instance and a high-performance media server on a Synology NAS is the ultimate &amp;ldquo;power user&amp;rdquo; move. By leveraging Cloudflare Tunnels, we can expose these services to the internet without opening firewall ports, while keeping our internal traffic secure and locked down. This approach provides enterprise-grade security with zero-trust architecture, all while maintaining the convenience of remote access from anywhere in the world.
+In this guide, we&amp;rsquo;ll walk through setting up:</description>
+    </item>
     
     <item>
       <title>Solving Let&#39;s Encrypt Challenges with SCP for Limited Web Hosting</title>

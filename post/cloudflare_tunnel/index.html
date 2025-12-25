@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Mastering the Home Lab: Gitea &amp; Jellyfin on Synology via Cloudflare Tunnel - my private blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="SlashGordon" /><meta name="description" content="Introduction Self-hosting a private Git instance and a high-performance media server on a Synology NAS is the ultimate &amp;ldquo;power user&amp;rdquo; move. By leveraging Cloudflare Tunnels, we can expose these services to the internet without opening firewall ports, while keeping our internal traffic secure and locked down. This approach provides enterprise-grade security with zero-trust architecture, all while maintaining the convenience of remote access from anywhere in the world.
+In this guide, we&amp;rsquo;ll walk through setting up:" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.72.0 with theme even" />
+
+
+<link rel="canonical" href="/post/cloudflare_tunnel/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+<link href="/sass/main.min.2e81bbed97b8b282c1aeb57488cc71c8d8c8ec559f3931531bd396bf31e0d4dd.css" rel="stylesheet">
+<link rel="stylesheet" href="/lib/fancybox/jquery.fancybox-3.1.20.min.css">
+<link rel="stylesheet" href="/css/cookie-consent.css">
+
+
+<link rel="stylesheet" href="/css/custom.css">
+<link rel="stylesheet" href="/css/cookie-consent.css">
+
+
+
+
+
+<meta property="og:title" content="Mastering the Home Lab: Gitea &amp; Jellyfin on Synology via Cloudflare Tunnel" />
+<meta property="og:description" content="Introduction Self-hosting a private Git instance and a high-performance media server on a Synology NAS is the ultimate &ldquo;power user&rdquo; move. By leveraging Cloudflare Tunnels, we can expose these services to the internet without opening firewall ports, while keeping our internal traffic secure and locked down. This approach provides enterprise-grade security with zero-trust architecture, all while maintaining the convenience of remote access from anywhere in the world.
+In this guide, we&rsquo;ll walk through setting up:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/cloudflare_tunnel/" />
+<meta property="article:published_time" content="2025-12-25T00:00:00+00:00" />
+<meta property="article:modified_time" content="2025-12-25T00:00:00+00:00" />
+<meta itemprop="name" content="Mastering the Home Lab: Gitea &amp; Jellyfin on Synology via Cloudflare Tunnel">
+<meta itemprop="description" content="Introduction Self-hosting a private Git instance and a high-performance media server on a Synology NAS is the ultimate &ldquo;power user&rdquo; move. By leveraging Cloudflare Tunnels, we can expose these services to the internet without opening firewall ports, while keeping our internal traffic secure and locked down. This approach provides enterprise-grade security with zero-trust architecture, all while maintaining the convenience of remote access from anywhere in the world.
+In this guide, we&rsquo;ll walk through setting up:">
+<meta itemprop="datePublished" content="2025-12-25T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2025-12-25T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1407">
+
+
+
+<meta itemprop="keywords" content="gitea,jellyfin,cloudflare,synology,docker-compose," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Mastering the Home Lab: Gitea &amp; Jellyfin on Synology via Cloudflare Tunnel"/>
+<meta name="twitter:description" content="Introduction Self-hosting a private Git instance and a high-performance media server on a Synology NAS is the ultimate &ldquo;power user&rdquo; move. By leveraging Cloudflare Tunnels, we can expose these services to the internet without opening firewall ports, while keeping our internal traffic secure and locked down. This approach provides enterprise-grade security with zero-trust architecture, all while maintaining the convenience of remote access from anywhere in the world.
+In this guide, we&rsquo;ll walk through setting up:"/>
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">SlashGordon</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/about">
+        <li class="mobile-menu-item">About me</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/projects">
+        <li class="mobile-menu-item">Projects</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">SlashGordon</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/about">About me</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/projects">Projects</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Mastering the Home Lab: Gitea &amp; Jellyfin on Synology via Cloudflare Tunnel</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2025-12-25 </span>
+        <div class="post-category">
+            <a href="/categories/homelab/"> homelab </a>
+            <a href="/categories/docker/"> docker </a>
+            <a href="/categories/cloudflare/"> cloudflare </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#1-the-architecture">1. The Architecture</a></li>
+    <li><a href="#3-cloudflare-tunnel-configuration">3. Cloudflare Tunnel Configuration</a>
+      <ul>
+        <li><a href="#public-hostname-configuration">Public Hostname Configuration</a></li>
+      </ul>
+    </li>
+    <li><a href="#5-jellyfin-performance--hardware-transcoding">5. Jellyfin Performance &amp; Hardware Transcoding</a>
+      <ul>
+        <li><a href="#direct-play-vs-transcoding">Direct Play vs. Transcoding</a></li>
+        <li><a href="#enabling-hardware-acceleration">Enabling Hardware Acceleration</a></li>
+        <li><a href="#verifying-hardware-acceleration">Verifying Hardware Acceleration</a></li>
+      </ul>
+    </li>
+    <li><a href="#6-security-synology-firewall-configuration">6. Security: Synology Firewall Configuration</a>
+      <ul>
+        <li><a href="#firewall-rules">Firewall Rules</a></li>
+        <li><a href="#additional-security-recommendations">Additional Security Recommendations</a></li>
+        <li><a href="#advanced-domain-security-rules">Advanced: Domain Security Rules</a></li>
+      </ul>
+    </li>
+    <li><a href="#summary">Summary</a>
+      <ul>
+        <li><a href="#next-steps">Next Steps</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="introduction">Introduction</h2>
+<p>Self-hosting a private Git instance and a high-performance media server on a Synology NAS is the ultimate &ldquo;power user&rdquo; move. By leveraging Cloudflare Tunnels, we can expose these services to the internet without opening firewall ports, while keeping our internal traffic secure and locked down. This approach provides enterprise-grade security with zero-trust architecture, all while maintaining the convenience of remote access from anywhere in the world.</p>
+<p>In this guide, we&rsquo;ll walk through setting up:</p>
+<ul>
+<li><strong>Gitea</strong>: A lightweight, self-hosted Git service</li>
+<li><strong>Jellyfin</strong>: An open-source media server for your personal library</li>
+<li><strong>Cloudflare Tunnel</strong>: Secure access without port forwarding</li>
+</ul>
+<h2 id="1-the-architecture">1. The Architecture</h2>
+<p>Our setup relies on a single Cloudflare Tunnel container that acts as the secure gateway for all our services. Here&rsquo;s how it works:</p>
+<ul>
+<li><strong>Docker Bridge Network</strong>: We use a dedicated network (<code>app_network</code>) that allows the tunnel container to communicate with Gitea and Jellyfin using container names as DNS entries.</li>
+<li><strong>Zero Port Forwarding</strong>: All traffic flows through Cloudflare&rsquo;s global network, eliminating the need to expose your home IP or open router ports.</li>
+<li><strong>Service Isolation</strong>: Each service runs in its own container with clearly defined networking boundaries.## 2. The Complete Docker Compose Configuration</li>
+</ul>
+<p>This configuration orchestrates all three services: Gitea (Git server), Jellyfin (media server), and the Cloudflare Tunnel for secure external access.</p>
+<p><strong>Save this as <code>docker-compose.yml</code> on your Synology:</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">version</span>: <span style="color:#e6db74">&#34;3.9&#34;</span>
+
+<span style="color:#66d9ef">services</span>:
+  <span style="color:#75715e"># --- Gitea (Git Service) ---</span>
+  <span style="color:#66d9ef">gitea</span>:
+    <span style="color:#66d9ef">image</span>: gitea/gitea:latest
+    <span style="color:#66d9ef">container_name</span>: gitea
+    <span style="color:#66d9ef">restart</span>: always
+    <span style="color:#66d9ef">networks</span>:
+      - app_network
+    <span style="color:#66d9ef">ports</span>:
+      - <span style="color:#e6db74">&#34;3000:3000&#34;</span>   <span style="color:#75715e"># Web UI</span>
+      - <span style="color:#e6db74">&#34;2222:2222&#34;</span>   <span style="color:#75715e"># SSH (use non-standard port to avoid conflicts)</span>
+    <span style="color:#66d9ef">environment</span>:
+      - USER_UID=<span style="color:#ae81ff">1026</span>          <span style="color:#75715e"># Match your Synology user UID</span>
+      - USER_GID=<span style="color:#ae81ff">100</span>           <span style="color:#75715e"># Match your Synology user GID</span>
+      - GITEA__server__DOMAIN=gitea.yourdomain.com
+      - GITEA__server__SSH_DOMAIN=git.yourdomain.com
+      - GITEA__server__ROOT_URL=https://gitea.yourdomain.com/
+      - GITEA__server__START_SSH_SERVER=<span style="color:#66d9ef">true</span>
+      - GITEA__server__SSH_PORT=<span style="color:#ae81ff">2222</span>
+    <span style="color:#66d9ef">volumes</span>:
+      - /volume1/docker/gitea:/data
+
+  <span style="color:#75715e"># --- Jellyfin (Media Server) ---</span>
+  <span style="color:#66d9ef">jellyfin</span>:
+    <span style="color:#66d9ef">image</span>: jellyfin/jellyfin:latest
+    <span style="color:#66d9ef">container_name</span>: jellyfin
+    <span style="color:#66d9ef">restart</span>: unless-stopped
+    <span style="color:#66d9ef">networks</span>:
+      - app_network
+    <span style="color:#66d9ef">environment</span>:
+      - JELLYFIN_DATA_DIR=/config
+      - NVIDIA_VISIBLE_DEVICES=all  <span style="color:#75715e"># For NVIDIA GPU transcoding (optional)</span>
+    <span style="color:#66d9ef">volumes</span>:
+      - /volume1/docker/jellyfin/config:/config
+      - /volume1/media/video/:/media
+    <span style="color:#66d9ef">ports</span>:
+      - <span style="color:#e6db74">&#34;8096:8096&#34;</span>
+
+  <span style="color:#75715e"># --- Cloudflare Tunnel ---</span>
+  <span style="color:#66d9ef">tunnel</span>:
+    <span style="color:#66d9ef">image</span>: cloudflare/cloudflared:latest
+    <span style="color:#66d9ef">container_name</span>: unified-tunnel
+    <span style="color:#66d9ef">restart</span>: unless-stopped
+    <span style="color:#66d9ef">networks</span>:
+      - app_network
+    <span style="color:#66d9ef">command</span>: tunnel run
+    <span style="color:#66d9ef">environment</span>:
+      - TUNNEL_TOKEN=${YOUR_TUNNEL_TOKEN}  <span style="color:#75715e"># Replace with your actual token</span>
+
+<span style="color:#66d9ef">networks</span>:
+  <span style="color:#66d9ef">app_network</span>:
+    <span style="color:#66d9ef">driver</span>: bridge
+    <span style="color:#66d9ef">ipam</span>:
+      <span style="color:#66d9ef">config</span>:
+        - <span style="color:#66d9ef">subnet</span>: <span style="color:#ae81ff">172.24.0.0</span>/<span style="color:#ae81ff">16</span>
+</code></pre></div><p><strong>Important Notes:</strong></p>
+<ul>
+<li>Replace <code>${YOUR_TUNNEL_TOKEN}</code> with your actual Cloudflare Tunnel token (obtain from the Cloudflare Zero Trust dashboard)</li>
+<li>Adjust <code>USER_UID</code> and <code>USER_GID</code> to match your Synology user (run <code>id &lt;username&gt;</code> via SSH to find these values)</li>
+<li>Update volume paths to match your Synology directory structure</li>
+</ul>
+<h2 id="3-cloudflare-tunnel-configuration">3. Cloudflare Tunnel Configuration</h2>
+<p>To route external traffic to your services, configure the following in your <strong>Cloudflare Zero Trust Dashboard</strong> (under Networks &gt; Connectors).</p>
+<h3 id="public-hostname-configuration">Public Hostname Configuration</h3>
+<p>For each tunnel, you&rsquo;ll need to add Public Hostnames (application routes). Use the following configuration:</p>
+<table>
+<thead>
+<tr>
+<th>Subdomain</th>
+<th>Service Type</th>
+<th>Internal URL</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gitea.yourdomain.com</code></td>
+<td>HTTP</td>
+<td><code>http://gitea:3000</code></td>
+<td>Gitea Web UI</td>
+</tr>
+<tr>
+<td><code>git.yourdomain.com</code></td>
+<td>TCP</td>
+<td><code>tcp://gitea:2222</code></td>
+<td>Git SSH (required for <code>git push/pull</code>)</td>
+</tr>
+<tr>
+<td><code>jelly.yourdomain.com</code></td>
+<td>HTTP</td>
+<td><code>http://jellyfin:8096</code></td>
+<td>Jellyfin media library</td>
+</tr>
+<tr>
+<td><code>internal.yourdomain.com</code></td>
+<td>HTTPS</td>
+<td><code>https://192.168.50.2:5001</code></td>
+<td>Synology DSM (enable &ldquo;No TLS Verify&rdquo;)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Why separate subdomains for Gitea?</strong> Cloudflare Tunnels can only route one subdomain to one service/port combination. Since Gitea has two distinct services (Web UI on port 3000 and SSH on port 2222), we need separate subdomains: <code>gitea.yourdomain.com</code> for the web interface and <code>git.yourdomain.com</code> for SSH/Git operations.</p>
+<p><strong>Critical Configuration Steps:</strong></p>
+<ol>
+<li><strong>Create the Tunnel</strong>: In the Cloudflare Zero Trust dashboard, create a new tunnel and copy the tunnel token</li>
+<li><strong>Add Public Hostnames</strong>: For each subdomain above, add a public hostname with the corresponding service type and URL</li>
+<li><strong>TCP Service for SSH</strong>: The <code>git.yourdomain.com</code> entry <strong>must</strong> use TCP type (not HTTP) to avoid &ldquo;bad handshake&rdquo; errors with Git SSH</li>
+<li><strong>No TLS Verify</strong>: For the Synology DSM entry, enable &ldquo;No TLS Verify&rdquo; since DSM uses a self-signed certificate## 4. Seamless Git SSH Access</li>
+</ol>
+<p>The real &ldquo;magic&rdquo; happens when you configure your local machine to automatically proxy Git SSH connections through Cloudflare. This eliminates the need to manually start tunnels every time you want to push or pull code.</p>
+<p><strong>Add this to your SSH config file</strong> (<code>~/.ssh/config</code> on Mac/Linux, <code>C:\Users\&lt;username&gt;\.ssh\config</code> on Windows):</p>
+<pre><code class="language-ssh-config" data-lang="ssh-config">Host git.yourdomain.com
+    HostName %h
+    User git
+    Port 2222
+    ProxyCommand cloudflared access tcp --hostname %h
+</code></pre><p><strong>What this does:</strong></p>
+<ul>
+<li>Automatically routes all SSH connections to <code>git.yourdomain.com</code> through Cloudflare Access</li>
+<li>Uses <code>cloudflared</code> as a transparent proxy</li>
+<li>No manual tunnel setup required - just run <code>git clone git@git.yourdomain.com:username/repo.git</code></li>
+</ul>
+<p><strong>Prerequisites:</strong></p>
+<ul>
+<li>Install <code>cloudflared</code> on your local machine: <a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/installation/">Cloudflare download page</a></li>
+<li>Authenticate once: <code>cloudflared access login</code></li>
+</ul>
+<p><strong>Troubleshooting:</strong>
+If you encounter connection issues, test the tunnel manually:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cloudflared access tcp --hostname git.yourdomain.com --url localhost:2222
+</code></pre></div><p>This command will show detailed logs and help identify authentication or routing problems.</p>
+<h2 id="5-jellyfin-performance--hardware-transcoding">5. Jellyfin Performance &amp; Hardware Transcoding</h2>
+<p>Since Jellyfin is running on your Synology NAS, optimizing performance is crucial for smooth playback, especially for high-resolution content.</p>
+<h3 id="direct-play-vs-transcoding">Direct Play vs. Transcoding</h3>
+<ul>
+<li><strong>Direct Play</strong>: When your client supports the media format natively, Jellyfin streams the file as-is with minimal CPU usage. This is ideal for most scenarios.</li>
+<li><strong>Transcoding</strong>: When format conversion is needed (e.g., 4K to 1080p, or incompatible codecs), transcoding can be CPU-intensive.</li>
+</ul>
+<h3 id="enabling-hardware-acceleration">Enabling Hardware Acceleration</h3>
+<p>To enable hardware-accelerated transcoding on Synology:</p>
+<ol>
+<li><strong>Open Jellyfin Dashboard</strong>: Navigate to <code>jelly.yourdomain.com</code> and log in as admin</li>
+<li><strong>Go to Transcoding Settings</strong>: Dashboard → Playback → Transcoding</li>
+<li><strong>Select Hardware Acceleration</strong>:
+<ul>
+<li><strong>Intel NAS</strong>: Choose &ldquo;Intel QuickSync Video&rdquo; (QSV)</li>
+<li><strong>AMD NAS</strong>: Choose &ldquo;Video Acceleration API (VA-API)&rdquo;</li>
+<li><strong>NVIDIA GPU</strong>: Choose &ldquo;NVIDIA NVENC/NVDEC&rdquo; (requires additional setup)</li>
+</ul>
+</li>
+</ol>
+<p><strong>Intel QuickSync</strong> (most common for Synology):</p>
+<ul>
+<li>Supports H.264, HEVC (H.265), VP9, and AV1 codecs</li>
+<li>Can handle multiple 4K streams simultaneously with minimal CPU usage</li>
+<li>Available on most Synology NAS with Intel processors (J-series, Plus models, etc.)</li>
+</ul>
+<h3 id="verifying-hardware-acceleration">Verifying Hardware Acceleration</h3>
+<p>After enabling, play a media file and check:</p>
+<ol>
+<li>Dashboard → Active Devices</li>
+<li>Look for &ldquo;Transcode Reason&rdquo; - should show hardware method (e.g., &ldquo;QSV&rdquo;)</li>
+<li>Monitor CPU usage - should remain low during transcoding</li>
+</ol>
+<p><strong>Pro Tip</strong>: Enable &ldquo;Prefer fMP4-HLS Media Container&rdquo; in the Transcoding settings for better compatibility across different devices.</p>
+<h2 id="6-security-synology-firewall-configuration">6. Security: Synology Firewall Configuration</h2>
+<p>Don&rsquo;t forget the final layer of security. Your Synology firewall needs to allow traffic from the Docker network to reach the services.</p>
+<h3 id="firewall-rules">Firewall Rules</h3>
+<p>In <strong>DSM → Control Panel → Security → Firewall</strong>:</p>
+<ol>
+<li>
+<p><strong>Create a new rule</strong> (if firewall is enabled):</p>
+<ul>
+<li><strong>Ports</strong>: Allow <code>2222, 3000, 5001, 8096</code></li>
+<li><strong>Source IP</strong>: <code>172.24.0.0</code> with netmask <code>255.240.0.0</code> (this covers the Docker subnet)</li>
+<li><strong>Protocol</strong>: TCP</li>
+<li><strong>Action</strong>: Allow</li>
+</ul>
+</li>
+<li>
+<p><strong>Why this matters</strong>: The Cloudflare Tunnel container needs to reach Gitea and Jellyfin. Since they&rsquo;re all on the Docker bridge network (<code>172.24.0.0/16</code>), this rule ensures internal Docker communication works properly.</p>
+</li>
+</ol>
+<h3 id="additional-security-recommendations">Additional Security Recommendations</h3>
+<ul>
+<li><strong>Enable Cloudflare Access Policies</strong>: Add email or identity provider authentication to your tunnels for an extra security layer</li>
+<li><strong>Regular Updates</strong>: Keep Docker images updated (<code>docker-compose pull &amp;&amp; docker-compose up -d</code>)</li>
+<li><strong>Monitor Logs</strong>: Regularly check container logs for suspicious activity (<code>docker logs &lt;container-name&gt;</code>)</li>
+<li><strong>Disable DSM Auto-Blocker for Tunnel</strong>: Add the Docker subnet to the allow list to prevent the tunnel from being blocked</li>
+</ul>
+<h3 id="advanced-domain-security-rules">Advanced: Domain Security Rules</h3>
+<p>For an additional layer of protection, you can configure <strong>Security Rules</strong> in Cloudflare to restrict access based on IP addresses or geographic locations.</p>
+<p>Navigate to your domain in Cloudflare Dashboard → <strong>Security</strong> → <strong>Security rules</strong> → <strong>Custom rules</strong> → <strong>Edit custom rule</strong>.</p>
+<p><strong>Example: Restrict access to your home network only</strong></p>
+<pre><code>(not ip.src in {2001:0db8:c0de:cafe::/64} and http.host wildcard &quot;gitea.yourdomain.com&quot;) 
+or (http.host wildcard &quot;jelly.yourdomain.com&quot; and not ip.src in {2001:0db8:c0de:cafe::/64}) 
+or (http.host wildcard &quot;internal.yourdomain.com&quot; and not ip.src in {2001:0db8:c0de:cafe::/64})
+</code></pre><p>This rule blocks access to your services unless the request comes from your specified IPv6 subnet. Replace <code>2001:0db8:c0de:cafe::/64</code> with your actual home network prefix.</p>
+<p><strong>Example: Block specific countries</strong></p>
+<p>You can also block entire countries (e.g., to reduce automated attacks):</p>
+<pre><code>(ip.geoip.country in {&quot;RU&quot; &quot;CN&quot; &quot;KP&quot;}) and http.host wildcard &quot;*.yourdomain.com&quot;
+</code></pre><p>This blocks traffic from Russia (RU), China (CN), and North Korea (KP). Adjust the country codes based on your needs.</p>
+<p><strong>Pro Tip</strong>: Combine both rules using <code>and</code>/<code>or</code> logic for granular control - for example, allow your home IP while blocking certain countries for all other traffic.</p>
+<h2 id="summary">Summary</h2>
+<p>You now have a fully functional, secure home lab setup featuring:</p>
+<p>✅ <strong>Gitea</strong>: Private Git hosting with seamless SSH access<br>
+✅ <strong>Jellyfin</strong>: High-performance media streaming with hardware transcoding<br>
+✅ <strong>Cloudflare Tunnel</strong>: Enterprise-grade security without port forwarding<br>
+✅ <strong>Remote Access</strong>: Access all services from anywhere with zero-trust security</p>
+<p>All of this runs on a single Synology NAS, protected by Cloudflare&rsquo;s global network, and accessible worldwide without exposing your home network.</p>
+<h3 id="next-steps">Next Steps</h3>
+<ul>
+<li><strong>Set up automated backups</strong> for your Gitea repositories and Jellyfin metadata</li>
+<li><strong>Configure Cloudflare Access policies</strong> for additional authentication layers</li>
+<li><strong>Add more services</strong> to your <code>docker-compose.yml</code> (e.g., Nextcloud, Bitwarden, Home Assistant)</li>
+<li><strong>Monitor resource usage</strong> to ensure your NAS can handle the workload</li>
+</ul>
+<p>Happy self-hosting! 🚀</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">SlashGordon</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2025-12-25
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/gitea/">gitea</a>
+          <a href="/tags/jellyfin/">jellyfin</a>
+          <a href="/tags/cloudflare/">cloudflare</a>
+          <a href="/tags/synology/">synology</a>
+          <a href="/tags/docker-compose/">docker-compose</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/acme_scp_solver/">
+            <span class="next-text nav-default">Solving Let&#39;s Encrypt Challenges with SCP for Limited Web Hosting</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:slash.gordon.dev@gmail.com%20" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/SlashGordon" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.instagram.com/mr.carlo.labrador/" class="iconfont icon-instagram" title="instagram"></a>
+  <a href="/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2019 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">2019</span>
+  </span>
+  <div class="legal-links">
+    <a href="/impressum">Impressum</a> | <a href="/privacy">Privacy Policy</a>
+  </div>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  <script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+  <script src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script><script></script><script src="/lib/flowchart/raphael-2.2.7.min.js"></script> <script src="/lib/flowchart/flowchart-1.8.0.min.js"></script><script></script><script src="/lib/sequence/webfontloader-1.6.28.js"></script> <script src="/lib/sequence/snap.svg-0.5.1.min.js"></script> <script src="/lib/sequence/underscore-1.8.3.min.js"></script> <script src="/lib/sequence/sequence-diagram-2.0.1.min.js"></script>
+    <link rel="stylesheet" href="/lib/sequence/sequence-diagram-2.0.1.min.css">
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+
+
+
+
+
+
+
+
+<script src="/js/cookie-consent.js"></script>
+
+
+<script src="/js/contact-obfuscation.js"></script>
+<script src="/js/cookie-consent.js"></script>
+
+
+</body>
+</html>
